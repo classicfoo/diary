@@ -46,6 +46,7 @@ document.addEventListener('DOMContentLoaded', function() {
     updateEntryListDisplay(filteredEntries);
   }
   
+  
   function updateEntryListDisplay(entriesToShow) {
     const entryListContainer = document.getElementById('entry-list');
     if (entryListContainer) {
@@ -53,6 +54,10 @@ document.addEventListener('DOMContentLoaded', function() {
   
       let entries = entriesToShow || JSON.parse(localStorage.getItem('entries')) || [];
       entries.sort((a, b) => new Date(b.date) - new Date(a.date)); // Sort by date in descending order
+  
+      const query = document.getElementById('entry-filter').value.toLowerCase();
+      const keywords = query.split(' ').filter(keyword => keyword.trim() !== ''); // Filter out empty strings
+
   
       entries.forEach(entry => {
         const entryElement = document.createElement('div');
@@ -62,10 +67,17 @@ document.addEventListener('DOMContentLoaded', function() {
         const entryDate = new Date(entry.date);
         const dateText = entryDate.toLocaleDateString(); // Format the date
   
+        const content = entry.content.toLowerCase();
+        const highlightedContent = keywords.reduce((acc, keyword) => {
+          const regex = new RegExp(keyword, 'gi'); // 'gi' for global and case-insensitive search
+          return acc.replace(regex, '<span class="highlight">$&</span>');
+        }, entry.content);
+        
+  
         entryElement.innerHTML = `
           <div class="entry-info">
             <span class="entry-date">${dateText}</span>
-            <span class="entry-content">${entry.content}</span>
+            <span class="entry-content">${highlightedContent}</span>
           </div>
         `;
   
@@ -80,3 +92,4 @@ document.addEventListener('DOMContentLoaded', function() {
       console.error("Entry list container not found");
     }
   }
+  

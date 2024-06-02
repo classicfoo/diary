@@ -66,3 +66,7 @@ z-index: 1000; /* Ensures the toolbar stays above other content */
   width: 24px;
   height: 24px;
 }
+
+.highlight {
+  background-color: yellow;
+}
