@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Entry</title>
+  <link rel="stylesheet" href="edit.css">
+</head>
+<body>
+  <div class="page-container">
+    <div class="toolbar">
+      <div class="toolbar-spacer"></div>
+      <button type="button" id="delete-entry" class="toolbar-button" title="Delete Entry">
+        <img src="delete-icon.png" alt="Delete">
+      </button>
+    </div>
+    <div id="entry-edit-container" class="entry-edit-container">
+      <form class="entry-edit-form">
+        <div class="input-group">
+          <label for="entry-date">Date</label>
+          <input type="date" id="entry-date" name="entry-date">
+        </div>
+        <div class="input-group">
+          <label for="entry-content">Entry</label>
+          <textarea id="entry-content" class="entry-description-editable" role="textbox"></textarea>
+        </div>
+      </form>
+    </div>
+  </div>
+  <script src="entry-edit.js"></script>
+</body>
+</html>

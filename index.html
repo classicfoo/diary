@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Daily Journal</title>
+  <link rel="stylesheet" href="main.css">
+</head>
+<body>
+  <div class="page-container">
+    <div class="toolbar">
+      <div class="toolbar-spacer"></div>
+      <button type="button" id="add-entry" class="toolbar-button" title="Add Entry">
+        <img src="add-icon.png" class="toolbar-icon">
+      </button>
+    </div>
+    <div class="diary-container">
+      <div class="filter-bar">
+        <input type="text" id="entry-filter" placeholder="Search entries">
+      </div>
+      <div id="entry-list">
+        <!-- Diary entries will be dynamically inserted here -->
+      </div>
+    </div>
+  </div>
+  <script src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+/* Main page styles */
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #f7f7f7;
+}
+
+.diary-container {
+  margin: 0px 0px;
+  padding: 0 10px; /* Adds 10px padding on both left and right sides */
+  background: #fff;
+}
+
+.filter-bar input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.entry {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+}
+
+/* Add additional styles as needed */
+
+
+.toolbar {
+  display: flex;
+  margin: 0px; /* The first value applies to top and bottom, and the second value to left and right */
+  padding: 20,20px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  background: #f8f8f8;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Adds a shadow at the bottom */
+
+}
+
+/* Assuming the class name for the toolbar */
+.toolbar {
+position: sticky; /* Keeps the toolbar at the top */
+top: 0; /* Aligns the toolbar to the top of the viewport */
+box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Adds a shadow at the bottom */
+z-index: 1000; /* Ensures the toolbar stays above other content */
+}
+
+
+.toolbar-spacer {
+  flex-grow: 1;
+}
+
+.toolbar-button {
+  background: #fff;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.toolbar-icon {
+  width: 24px;
+  height: 24px;
+}
