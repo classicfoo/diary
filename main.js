@@ -25,6 +25,13 @@ document.addEventListener('DOMContentLoaded', function() {
   
     updateEntryListDisplay();
   });
+
+  // Add event listener to the "Check Storage" button
+  document.getElementById('check-storage').addEventListener('click', function() {
+    const totalBytes = JSON.stringify(localStorage).length;
+    const totalKiloBytes = (totalBytes / 1024).toFixed(2);
+    alert(`Total storage usage: ${totalKiloBytes} KB`);
+});
   
   function filterEntries() {
     const query = document.getElementById('entry-filter').value.toLowerCase();
