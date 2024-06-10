@@ -23,6 +23,68 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
+  document.getElementById("format-text").addEventListener("click", function () {
+    formatTextHandler();
+  });
+
+  function formatTextHandler() {
+    sentenceCaseWithBullets();
+    saveEntry();
+    // You can add more formatting functions here in the future
+  }
+
+  function sentenceCaseWithBullets() {
+    let allText = document.getElementById('entry-content').value;
+    
+    if (allText) {
+      let lines = allText.split('\n');
+      let capitalizedLines = [];
+  
+      // Loop through each line in the input text
+      for (let line of lines) {
+        let trimmedLine = line.trim(); // Trim leading and trailing spaces
+
+        // Line starts with a letter followed by a space, apply sentence case with bullets
+        if (/^[a-zA-Z]\s/.test(trimmedLine)) {
+          let preservedSpaces = line.match(/^\s*/)[0]; // Preserve leading spaces
+
+          // Capitalize the third character of the trimmed line
+          trimmedLine = preservedSpaces + trimmedLine.slice(0, 2) + trimmedLine[2].toUpperCase() + trimmedLine.slice(3);
+        }
+        else {
+          // Line does not match the specified format, capitalize the first word
+          trimmedLine = trimmedLine.charAt(0).toUpperCase() + trimmedLine.slice(1);
+        }
+
+      // Add the processed line to the list of capitalized lines
+      capitalizedLines.push(trimmedLine);
+  
+      let capitalizedText = capitalizedLines.join('\n');
+  
+      let sentenceCasedText = [];
+      for (let line of capitalizedLines) {
+        let sentences = line.split(/(?<=[.!?])\s+/);
+        let sentenceCasedSentences = [];
+  
+        for (let sentence of sentences) {
+          if (sentence) {
+            sentence = sentence.charAt(0).toUpperCase() + sentence.slice(1);
+            sentenceCasedSentences.push(sentence);
+          }
+        }
+  
+        let sentenceCasedLine = sentenceCasedSentences.join(' ');
+        sentenceCasedText.push(sentenceCasedLine);
+      }
+  
+      sentenceCasedText = sentenceCasedText.join('\n');
+  
+      document.getElementById('entry-content').value = sentenceCasedText;
+    }
+  }
+  
+  }
+
   
   function handleKeyDown(event) {
     // Check if the Enter key was pressed
@@ -57,7 +119,7 @@ document.addEventListener('DOMContentLoaded', function() {
       event.preventDefault();
 
       // Trigger the input event to save the task and update UI
-      saveTask();
+      saveEntry();
       textarea.dispatchEvent(new Event("input"));
     }
   }
