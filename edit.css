@@ -1,4 +1,4 @@
-/* Task editing page styles */
+/* entry editing page styles */
 
 body {
     margin: 0;
@@ -6,12 +6,12 @@ body {
   }
 
   
-.task-edit-container {
-  padding: 0 10px; /* Add 5px padding on both left and right sides */
+  .entry-edit-container {
+    padding: 0 10px; /* Add 5px padding on both left and right sides */
     background: #fff;
   }
   
-  .task-edit-form {
+  .entry-edit-form {
     display: flex;
     flex-direction: column;
   }
@@ -27,7 +27,7 @@ body {
   
   .input-group input[type="text"],
   .input-group textarea,
-  .input-group .task-description-editable { /* Add .task-description-editable to your existing CSS */
+  .input-group .entry-description-editable { /* Add .entry-description-editable to your existing CSS */
       width: 100%;
       padding: 10px;
       box-sizing: border-box;
@@ -37,12 +37,12 @@ body {
       font-size: 14px;                /* Match the font size */
   }  
 
-  .input-group .task-description-editable { /* Add .task-description-editable to your existing CSS */
+  .input-group .entry-description-editable { /* Add .entry-description-editable to your existing CSS */
     min-height: 15em; /* Adjust the height as needed */
 
 }  
 
-#task-date {
+#entry-date {
   width: 100%; /* This will make the input take the full width of its parent */
   padding: 8px; /* Adjust padding as needed */
   margin: 4px 0; /* Space above and below the input */
@@ -53,13 +53,13 @@ body {
   border-radius: 4px;
 }
   
-  .task-edit-actions {
+  .entry-edit-actions {
     display: flex;
     align-items: center;
     justify-content: space-between;
   }
   
-  .task-edit-actions button {
+  .entry-edit-actions button {
     padding: 10px 20px;
     border: none;
     border-radius: 4px;
@@ -122,7 +122,7 @@ body {
 
 
 /* cool animation, but too distracting
-#task-title, #task-description {
+#entry-title, #entry-description {
   animation: colorChange 1s infinite alternate;
   background-color:#e5f7e5;
 }

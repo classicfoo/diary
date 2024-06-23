@@ -1,3 +1,22 @@
+let selectionStart = 0;
+let selectionEnd = 0;
+
+function saveSelection() {
+  const textarea = document.getElementById("entry-content");
+  selectionStart = textarea.selectionStart;
+  selectionEnd = textarea.selectionEnd;
+
+  if (selectionStart === selectionEnd) {
+    alert("Please select some text before indenting.");
+  }
+}
+
+function restoreSelection() {
+  const textarea = document.getElementById("entry-content");
+  textarea.setSelectionRange(selectionStart, selectionEnd);
+  textarea.focus();
+}
+
 document.addEventListener('DOMContentLoaded', function() {
   var entryId = localStorage.getItem('selectedEntryId');
 
@@ -133,6 +152,82 @@ document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('entry-content').addEventListener('input', handleInputChange);
   document.getElementById('entry-date').addEventListener('input', handleInputChange);
   document.getElementById("entry-content").addEventListener("keydown", handleKeyDown);
+
+  // Add an event listener for the indent-text button
+  document.getElementById("indent-text").addEventListener("click", function () {
+    saveSelection();
+    indentTextHandler();
+
+    const textarea = document.getElementById("entry-content");
+    selectionEnd = textarea.selectionEnd;
+    restoreSelection();
+  });
+
+  // Add an event listener for the unindent-text button
+document.getElementById("unindent-text").addEventListener("click", function () {
+  saveSelection();
+  unindentTextHandler();
+  
+  const textarea = document.getElementById("entry-content");
+  selectionEnd = textarea.selectionEnd +2;
+  restoreSelection();
+});
+
+  function indentTextHandler() {
+    const textarea = document.getElementById("entry-content");
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const text = textarea.value;
+  
+    // Get the selected text
+    const selectedText = text.substring(start, end);
+  
+    // Split the selected text into lines
+    const lines = selectedText.split('\n');
+  
+    // Prepend two spaces to each line
+    const indentedLines = lines.map(line => '  ' + line);
+  
+    // Join the lines back into a single string
+    const indentedText = indentedLines.join('\n');
+  
+    // Replace the selected text with the indented text
+    textarea.setRangeText(indentedText, start, end, "end");
+  
+    // Trigger the input event to save the task and update UI
+    saveEntry();
+    textarea.dispatchEvent(new Event("input"));
+  }
+
+  function unindentTextHandler() {
+    const textarea = document.getElementById("entry-content");
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const text = textarea.value;
+  
+    // Split the text into lines
+    const lines = text.substring(start, end).split('\n');
+  
+    // Unindent each line
+    const unindentedLines = lines.map(line => {
+      if (line.startsWith('  ')) {
+        return line.substring(2);
+      }
+      return line;
+    });
+  
+    // Join the lines back together
+    const newText = unindentedLines.join('\n');
+  
+    // Replace the selected text with the unindented text
+    textarea.value = text.substring(0, start) + newText + text.substring(end);
+
+    // Trigger the input event to save the task and update UI
+    saveEntry();
+
+    // Adjust the selection range
+    textarea.setSelectionRange(start, start + newText.length);
+  }
 
   // Event listener for the delete button
   document.getElementById('delete-entry').addEventListener('click', function() {
