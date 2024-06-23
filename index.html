@@ -1,31 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Daily Journal</title>
-  <link rel="stylesheet" href="main.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Easy Date To-Do List</title>
+<!-- Link to your CSS file -->
+<link rel="stylesheet" href="main.css">
 </head>
 <body>
-  <div class="page-container">
-    <div class="toolbar">
-      <div class="toolbar-spacer"></div>
-      <button type="button" id="check-storage" class="toolbar-button" title="Check Storage">
-        <img src="storage-icon.png" class="toolbar-icon">
-      </button>
-      <button type="button" id="add-entry" class="toolbar-button" title="Add Entry">
+
+
+<div class="page-container">
+
+  <div class="toolbar">
+    <div class="toolbar-spacer"></div>
+  
+      <button type="button" id="add-task" class="toolbar-button" title="Add task">
         <img src="add-icon.png" class="toolbar-icon">
       </button>
     </div>
-    <div class="diary-container">
-      <div class="filter-bar">
-        <input type="text" id="entry-filter" placeholder="Search entries">
-      </div>
-      <div id="entry-list">
-        <!-- Diary entries will be dynamically inserted here -->
-      </div>
-    </div>
+  <div class="todo-container">
+
+  <!-- Toolbar Section -->
+  <div class="filter-bar">
+    <input type="text" id="task-filter" placeholder="Filter">
   </div>
-  <script src="main.js"></script>
+
+  <div id="task-list">
+    <!-- Tasks will be dynamically inserted here by your JavaScript code -->
+  </div>
+
+</div>
+
+</div>
+
+<!-- Link to your JavaScript file -->
+<script src="confetti.browser.min.js"></script>
+<script src="main.js"></script>
+
+
 </body>
 </html>

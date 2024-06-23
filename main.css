@@ -1,72 +1,171 @@
 /* Main page styles */
 body {
-  font-family: 'Arial', sans-serif;
-  margin: 0;
-  padding: 0;
-  background: #f7f7f7;
-}
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f7f7f7;
+  }
+  
+  .todo-container {
+    margin: 0px 0px;
+    padding: 0 10px; /* Adds 10px padding on both left and right sides */
+    background: #fff;
+  }
+  
+  .filter-bar input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .easy-list-section {
+    margin-bottom: 20px;
+  }
+  
+  .easy-date-heading {
+    margin: 10px 0;
+    padding-left: 10px;
+    border-left: 4px solid #56CCF2;
+    font-size: 1.2em;
+  }
+  
+  .task {
+    padding: 10px;  
+    border-bottom: 1px solid #ddd;
+    font-family: Arial, sans-serif;  /* Match the font family */
+    font-size: 14px;   
+  }
+  
+  .task.overdue {
+    border-left: 4px solid red;
+    padding-left: 6px;
+  }
+  
 
-.diary-container {
-  margin: 0px 0px;
-  padding: 0 10px; /* Adds 10px padding on both left and right sides */
-  background: #fff;
-}
 
-.filter-bar input[type="text"] {
-  width: 100%;
-  padding: 10px;
-  box-sizing: border-box;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-}
+  .toolbar {
+    display: flex;
+    margin: 0px; /* The first value applies to top and bottom, and the second value to left and right */
+    padding: 20,20px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    background: #f8f8f8;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Adds a shadow at the bottom */
 
-.entry {
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
-  font-family: Arial, sans-serif;
-  font-size: 14px;
-}
+  }
 
-/* Add additional styles as needed */
-
-
+  /* Assuming the class name for the toolbar */
 .toolbar {
-  display: flex;
-  margin: 0px; /* The first value applies to top and bottom, and the second value to left and right */
-  padding: 20,20px;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px;
-  background: #f8f8f8;
+  position: sticky; /* Keeps the toolbar at the top */
+  top: 0; /* Aligns the toolbar to the top of the viewport */
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Adds a shadow at the bottom */
-
-}
-
-/* Assuming the class name for the toolbar */
-.toolbar {
-position: sticky; /* Keeps the toolbar at the top */
-top: 0; /* Aligns the toolbar to the top of the viewport */
-box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Adds a shadow at the bottom */
-z-index: 1000; /* Ensures the toolbar stays above other content */
+  z-index: 1000; /* Ensures the toolbar stays above other content */
 }
 
 
-.toolbar-spacer {
-  flex-grow: 1;
+  .toolbar-spacer {
+    flex-grow: 1;
+  }
+  
+  .toolbar-button {
+    background: #fff;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .toolbar-icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  .task-date {
+    margin-right: 10px;
+}
+  
+.bg-red {
+  background-color: rgb(231, 154, 174);
+}
+
+.bg-green {
+  background-color: rgb(153, 216, 195);
+}
+
+.bg-blue {
+  background-color: rgb(153, 203, 254);
+}
+
+.bg-light-blue {
+  background-color: rgb(222, 240, 250);
+}
+
+.task-info {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0px; /* Space between date and title */
+}
+
+.task-date {
+  min-width: 60px; /* Adjust as needed */
+  text-align: left;
+}
+
+@keyframes dropIn {
+  0% {
+      transform: translateY(-100%); /* Start above the screen */
+      opacity: 0;
+  }
+  80% {
+      transform: translateY(10%); /* Slight bounce effect */
+      opacity: 1;
+  }
+  100% {
+      transform: translateY(0); /* Settle into final position */
+      opacity: 1;
+  }
 }
 
 .toolbar-button {
-  background: #fff;
-  border: none;
-  cursor: pointer;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  animation: dropIn 0.5s ease-out forwards; /* Apply the animation */
 }
 
-.toolbar-icon {
-  width: 24px;
-  height: 24px;
+/* this animation is cool but too distracting*/
+/* Start from the left of the screen */
+/* Slide into final position */
+/*
+@keyframes slideInFromLeft {
+  0% {
+      transform: translateX(-100%); 
+      opacity: 0;
+  }
+  100% {
+      transform: translateX(0); 
+      opacity: 1;
+  }
+}
+*/
+
+/* This flashing red text is too annoying */
+/*
+.bg-red .task-info {
+  animation: colorChange 0.25s infinite alternate;
 }
 
-.highlight {
-  background-color: yellow;
+@keyframes colorChange {
+  0% { color: #000; }
+  100% { color: red; }  
+}
+*/
+
+.filter-bar {
+  position: sticky;
+  top: 50px; /* Adjust this value if you have other elements at the top */
+  background-color: white; /* Or any background color that fits your design */
+  z-index: 100; /* Ensures it stays above other content */
+  padding: 10px; /* Optional, for better spacing */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Optional, for better visibility */
 }
