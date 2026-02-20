@@ -28,7 +28,7 @@
 </nav>
 <?php endif; ?>
 
-<main class="container py-4 app-main">
+<main class="container app-main">
     <?php $flash = consume_flash(); ?>
     <?php if ($flash): ?>
         <div class="alert alert-<?= e($flash['type']) ?>" role="alert">

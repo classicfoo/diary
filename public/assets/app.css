@@ -17,6 +17,11 @@ body {
     display: none;
 }
 
+.app-main {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+}
+
 .app-topbar {
     background: #ef402b;
     border-bottom: 2px solid rgba(0, 0, 0, 0.08);
@@ -110,11 +115,11 @@ body {
     display: none;
 }
 
-    .entry-link:hover,
-    .entry-link.active {
-        background: #2d84c7;
-        color: #fff;
-    }
+.entry-link:hover,
+.entry-link.active {
+    background: #2d84c7;
+    color: #fff;
+}
 
 .editor-pane .card {
     border: none;
@@ -189,7 +194,7 @@ body {
     .page-dashboard .app-main,
     .page-journal .app-main {
         max-width: 100%;
-        padding: 0;
+        padding: 0 !important;
         min-height: 100vh;
     }
 
@@ -252,10 +257,19 @@ body {
         gap: 0.45rem;
     }
 
-    .icon-dot {
+    .mobile-icon-btn {
+        background: transparent;
+        border: 0;
         color: #d4d8df;
         font-size: 1.2rem;
         line-height: 1;
+        text-decoration: none;
+        padding: 0;
+    }
+
+    .mobile-icon-btn:hover,
+    .mobile-icon-btn:focus {
+        color: #ffffff;
     }
 
     .pill {
@@ -355,6 +369,20 @@ body {
     .journal-sidebar form.p-3 {
         border: 0 !important;
         padding: 0.8rem 1rem !important;
+    }
+
+    .entry-search-wrap {
+        display: none;
+        padding: 0 1rem 0.35rem;
+    }
+
+    .entry-search-wrap.open {
+        display: block;
+    }
+
+    .entry-search-wrap .form-control {
+        border: 1px solid #c4cbd7;
+        background: #eef2f7;
     }
 
     .journal-sidebar .btn {

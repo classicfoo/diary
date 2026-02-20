@@ -33,18 +33,35 @@ require __DIR__ . '/../src/views/header.php';
     <?php if ($isMobileEdit): ?>
         <a href="/journal.php?id=<?= (int) $journalId ?>" class="mobile-back">←</a>
     <?php else: ?>
-        <span class="mobile-back placeholder"> </span>
+        <a href="/dashboard.php" class="mobile-back">←</a>
     <?php endif; ?>
     <h1><?= e((string) $journal['title']) ?></h1>
     <div class="mobile-icons">
+        <form method="post" action="/entries_create.php" id="mobile-create-entry-form">
+            <?= csrf_input() ?>
+            <input type="hidden" name="journal_id" value="<?= (int) $journalId ?>">
+        </form>
+        <form method="post" action="/logout.php" id="mobile-logout-form">
+            <?= csrf_input() ?>
+        </form>
         <?php if ($isMobileEdit): ?>
-            <span class="icon-dot">⇩</span>
-            <span class="icon-dot">＋</span>
+            <a href="/journal.php?id=<?= (int) $journalId ?>" class="mobile-icon-btn" title="All entries">≣</a>
+            <button type="submit" form="mobile-create-entry-form" class="mobile-icon-btn" title="New entry">＋</button>
         <?php else: ?>
-            <span class="icon-dot">⌕</span>
-            <span class="icon-dot">＋</span>
+            <button type="button" id="mobile-search-toggle" class="mobile-icon-btn" title="Search entries">⌕</button>
+            <button type="submit" form="mobile-create-entry-form" class="mobile-icon-btn" title="New entry">＋</button>
         <?php endif; ?>
-        <span class="icon-dot">⋮</span>
+        <div class="dropdown">
+            <button class="mobile-icon-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false" title="More">⋮</button>
+            <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="/dashboard.php">Journals</a></li>
+                <?php if ($isMobileEdit): ?>
+                    <li><a class="dropdown-item" href="/journal.php?id=<?= (int) $journalId ?>">All Entries</a></li>
+                <?php endif; ?>
+                <li><button class="dropdown-item" type="submit" form="mobile-create-entry-form">New Entry</button></li>
+                <li><button class="dropdown-item text-danger" type="submit" form="mobile-logout-form">Sign out</button></li>
+            </ul>
+        </div>
     </div>
 </div>
 
@@ -58,6 +75,9 @@ require __DIR__ . '/../src/views/header.php';
             <input type="hidden" name="journal_id" value="<?= (int) $journalId ?>">
             <button class="btn btn-primary w-100 mobile-new-entry-btn" type="submit">New Entry</button>
         </form>
+        <div class="entry-search-wrap" id="entry-search-wrap">
+            <input type="search" id="entry-search" class="form-control form-control-sm" placeholder="Search entries">
+        </div>
         <div class="entry-list">
             <?php if (!$entries): ?>
                 <p class="text-light opacity-75 small p-3 mb-0">No entries yet.</p>
@@ -182,7 +202,13 @@ require __DIR__ . '/../src/views/header.php';
 
             setStatus('Saved', 'autosave-saved');
             if (activeTitle) activeTitle.textContent = titleInput.value.trim() || 'Untitled';
-            if (activeDate) activeDate.textContent = dateInput.value;
+            if (activeDate) {
+                const parsed = new Date(dateInput.value + 'T00:00:00');
+                const pretty = Number.isNaN(parsed.getTime())
+                    ? dateInput.value
+                    : parsed.toLocaleDateString(undefined, { day: 'numeric', month: 'long', year: 'numeric' });
+                activeDate.textContent = pretty;
+            }
         } catch (error) {
             dirty = true;
             setStatus(error.message || 'Autosave failed', 'autosave-error');
@@ -220,4 +246,29 @@ require __DIR__ . '/../src/views/header.php';
 })();
 </script>
 <?php endif; ?>
+<script>
+(() => {
+    const searchToggle = document.getElementById('mobile-search-toggle');
+    const searchWrap = document.getElementById('entry-search-wrap');
+    const searchInput = document.getElementById('entry-search');
+    const entryLinks = Array.from(document.querySelectorAll('.entry-link'));
+
+    if (searchToggle && searchWrap && searchInput) {
+        searchToggle.addEventListener('click', () => {
+            searchWrap.classList.toggle('open');
+            if (searchWrap.classList.contains('open')) {
+                searchInput.focus();
+            }
+        });
+
+        searchInput.addEventListener('input', () => {
+            const query = searchInput.value.trim().toLowerCase();
+            entryLinks.forEach((link) => {
+                const text = link.textContent.toLowerCase();
+                link.style.display = text.includes(query) ? '' : 'none';
+            });
+        });
+    }
+})();
+</script>
 <?php require __DIR__ . '/../src/views/footer.php'; ?>
