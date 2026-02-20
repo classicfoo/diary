@@ -45,6 +45,11 @@ require __DIR__ . '/../src/views/header.php';
     <input type="hidden" name="journal_id" id="rename-journal-id" value="">
     <input type="hidden" name="title" id="rename-journal-title" value="">
 </form>
+<form method="post" action="/journals_update.php" id="delete-journal-form" class="d-none">
+    <?= csrf_input() ?>
+    <input type="hidden" name="action" value="delete">
+    <input type="hidden" name="journal_id" id="delete-journal-id" value="">
+</form>
 
 <?php if (!$journals): ?>
     <div class="card dashboard-empty shadow-sm">
@@ -142,6 +147,7 @@ require __DIR__ . '/../src/views/header.php';
                     </div>
                 </div>
                 <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-danger me-auto" id="delete-journal-btn">Delete journal</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                     <button type="submit" class="btn btn-primary">Save settings</button>
                 </div>
@@ -206,6 +212,9 @@ require __DIR__ . '/../src/views/header.php';
 
     const settingsModal = document.getElementById('journalSettingsModal');
     if (!settingsModal) return;
+    const deleteJournalBtn = document.getElementById('delete-journal-btn');
+    const deleteJournalForm = document.getElementById('delete-journal-form');
+    const deleteJournalId = document.getElementById('delete-journal-id');
 
     settingsModal.addEventListener('show.bs.modal', (event) => {
         const trigger = event.relatedTarget;
@@ -220,7 +229,15 @@ require __DIR__ . '/../src/views/header.php';
         document.getElementById('settings-journal-title').value = title;
         document.getElementById('settings-bg-color').value = bgColor;
         document.getElementById('settings-sort-order').value = sortOrder;
+        deleteJournalId.value = id;
     });
+
+    if (deleteJournalBtn && deleteJournalForm) {
+        deleteJournalBtn.addEventListener('click', () => {
+            if (!window.confirm('Delete this journal and all its entries?')) return;
+            deleteJournalForm.submit();
+        });
+    }
 })();
 </script>
 <?php require __DIR__ . '/../src/views/footer.php'; ?>

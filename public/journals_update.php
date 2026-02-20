@@ -46,5 +46,11 @@ if ($action === 'settings') {
     redirect('/dashboard.php');
 }
 
+if ($action === 'delete') {
+    delete_journal($db, $journalId, $userId);
+    flash('success', 'Journal deleted.');
+    redirect('/dashboard.php');
+}
+
 flash('danger', 'Invalid journal action.');
 redirect('/dashboard.php');

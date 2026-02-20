@@ -173,3 +173,12 @@ function update_journal_settings(PDO $db, int $journalId, int $userId, string $b
         'user_id' => $userId,
     ]);
 }
+
+function delete_journal(PDO $db, int $journalId, int $userId): void
+{
+    $stmt = $db->prepare('DELETE FROM journals WHERE id = :id AND user_id = :user_id');
+    $stmt->execute([
+        'id' => $journalId,
+        'user_id' => $userId,
+    ]);
+}
