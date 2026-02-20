@@ -33,7 +33,7 @@ require __DIR__ . '/../src/views/header.php';
     <?php if ($isMobileEdit): ?>
         <a href="/journal.php?id=<?= (int) $journalId ?>" class="mobile-back">←</a>
     <?php else: ?>
-        <a href="/dashboard.php" class="mobile-back">←</a>
+        <span class="mobile-back placeholder"> </span>
     <?php endif; ?>
     <h1><?= e((string) $journal['title']) ?></h1>
     <div class="mobile-icons">
@@ -56,7 +56,7 @@ require __DIR__ . '/../src/views/header.php';
         <form method="post" action="/entries_create.php" class="p-3 border-bottom">
             <?= csrf_input() ?>
             <input type="hidden" name="journal_id" value="<?= (int) $journalId ?>">
-            <button class="btn btn-primary w-100" type="submit">+ New Entry</button>
+            <button class="btn btn-primary w-100 mobile-new-entry-btn" type="submit">New Entry</button>
         </form>
         <div class="entry-list">
             <?php if (!$entries): ?>
@@ -66,7 +66,7 @@ require __DIR__ . '/../src/views/header.php';
                 <a class="entry-link <?= $activeEntry && (int) $activeEntry['id'] === (int) $entry['id'] ? 'active' : '' ?>" href="/journal.php?id=<?= (int) $journalId ?>&entry=<?= (int) $entry['id'] ?>&view=edit">
                     <strong><?= e((string) $entry['title']) ?></strong>
                     <p><?= e(mb_substr((string) $entry['content'], 0, 90)) ?><?= mb_strlen((string) $entry['content']) > 90 ? '...' : '' ?></p>
-                    <span><?= e((string) $entry['entry_date']) ?></span>
+                    <span><?= e(format_entry_date((string) $entry['entry_date'])) ?></span>
                 </a>
             <?php endforeach; ?>
         </div>
@@ -83,7 +83,7 @@ require __DIR__ . '/../src/views/header.php';
         <?php else: ?>
             <div class="card shadow-sm">
                 <div class="card-body">
-                    <div class="mobile-date-strip mobile-only"><?= e((string) $activeEntry['entry_date']) ?></div>
+                    <div class="mobile-date-strip mobile-only"><?= e(format_entry_date((string) $activeEntry['entry_date'])) ?></div>
                     <form method="post" action="/entries_autosave.php" class="vstack gap-3" id="autosave-form">
                         <?= csrf_input() ?>
                         <input type="hidden" name="journal_id" value="<?= (int) $journalId ?>">
@@ -104,11 +104,11 @@ require __DIR__ . '/../src/views/header.php';
                         </div>
                         <div>
                             <label class="form-label">Your entry</label>
-                            <textarea name="content" id="entry-content-input" class="form-control editor-content"><?= e((string) $activeEntry['content']) ?></textarea>
+                            <textarea name="content" id="entry-content-input" class="form-control editor-content" placeholder="Your entry here..."><?= e((string) $activeEntry['content']) ?></textarea>
                         </div>
                     </form>
-                    <hr>
-                    <form method="post" action="/entries_delete.php" onsubmit="return confirm('Delete this entry?');">
+                    <hr class="desktop-delete">
+                    <form method="post" action="/entries_delete.php" class="desktop-delete" onsubmit="return confirm('Delete this entry?');">
                         <?= csrf_input() ?>
                         <input type="hidden" name="journal_id" value="<?= (int) $journalId ?>">
                         <input type="hidden" name="entry_id" value="<?= (int) $activeEntry['id'] ?>">

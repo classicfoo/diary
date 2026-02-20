@@ -39,3 +39,10 @@
 - [x] Run manual end-to-end verification.
 - [x] Document setup and run instructions in README.
 - [x] Mark all tasks complete.
+
+## Phase 8: Mobile Parity Refinement
+- [x] Capture real mobile screenshots locally and compare against references.
+- [x] Fix journal-list mobile top bar/icon behavior to match target screens.
+- [x] Fix mobile `New Entry` CTA styling (remove duplicate label, match size/spacing).
+- [x] Fix mobile editor visual issues (hide noisy flash/delete controls, tune typography/date display).
+- [x] Fix mobile page height/background continuity and verify all three key mobile screens.

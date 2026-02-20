@@ -30,7 +30,7 @@ require __DIR__ . '/../src/views/header.php';
     </form>
 </div>
 
-<form method="post" action="/journals_create.php" class="mobile-new-journal mobile-only">
+<form method="post" action="/journals_create.php" class="mobile-new-journal mobile-only" id="mobile-new-journal-form">
     <?= csrf_input() ?>
     <input type="text" name="title" class="form-control" placeholder="New journal" required>
     <button class="btn btn-primary" type="submit">+ New Journal</button>
@@ -72,4 +72,24 @@ require __DIR__ . '/../src/views/header.php';
         <?php endforeach; ?>
     </div>
 <?php endif; ?>
+<script>
+(() => {
+    const form = document.getElementById('mobile-new-journal-form');
+    if (!form) return;
+    const titleInput = form.querySelector('input[name=\"title\"]');
+
+    form.addEventListener('submit', (event) => {
+        const existing = titleInput.value.trim();
+        if (existing !== '') return;
+
+        const title = window.prompt('Journal title:', \"Michael's Journal\");
+        if (!title || title.trim() === '') {
+            event.preventDefault();
+            return;
+        }
+
+        titleInput.value = title.trim();
+    });
+})();
+</script>
 <?php require __DIR__ . '/../src/views/footer.php'; ?>

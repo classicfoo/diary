@@ -110,11 +110,11 @@ body {
     display: none;
 }
 
-.entry-link:hover,
-.entry-link.active {
-    background: #2d84c7;
-    color: #fff;
-}
+    .entry-link:hover,
+    .entry-link.active {
+        background: #2d84c7;
+        color: #fff;
+    }
 
 .editor-pane .card {
     border: none;
@@ -190,6 +190,7 @@ body {
     .page-journal .app-main {
         max-width: 100%;
         padding: 0;
+        min-height: 100vh;
     }
 
     .app-logo {
@@ -238,6 +239,11 @@ body {
         text-decoration: none;
         font-size: 1.6rem;
         line-height: 1;
+        min-width: 1.25rem;
+    }
+
+    .mobile-back.placeholder {
+        visibility: hidden;
     }
 
     .mobile-icons {
@@ -355,16 +361,25 @@ body {
         width: 100%;
         background: #3a99d8;
         border: 0;
-        font-size: 2rem;
-        line-height: 1;
-        padding: 0.6rem;
+        font-size: 1.1rem;
+        line-height: 1.1;
+        padding: 0.62rem 0.9rem;
         border-radius: 4px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
     }
 
-    .journal-sidebar .btn::after {
-        content: ' New Entry';
-        font-size: 0.8rem;
-        vertical-align: middle;
+    .mobile-new-entry-btn::before {
+        content: '+';
+        display: inline-block;
+        width: 1.2rem;
+        height: 1.2rem;
+        line-height: 1.2rem;
+        border: 1px solid rgba(255, 255, 255, 0.65);
+        border-radius: 50%;
+        font-size: 1rem;
     }
 
     .entry-link {
@@ -400,6 +415,23 @@ body {
         font-size: 0.72rem;
     }
 
+    .mobile-mode-list .entry-link.active {
+        background: #f1f2f4;
+        color: #4f5762;
+    }
+
+    .mobile-mode-list .entry-link.active strong {
+        color: #565e69;
+    }
+
+    .mobile-mode-list .entry-link.active p {
+        color: #5f6875;
+    }
+
+    .mobile-mode-list .entry-link.active span {
+        color: #9ca3ad;
+    }
+
     .editor-pane .card-body {
         padding: 0;
     }
@@ -407,6 +439,7 @@ body {
     .editor-pane .card {
         border-radius: 0;
         box-shadow: none !important;
+        background: #f6f7f8;
     }
 
     .mobile-date-strip {
@@ -422,6 +455,10 @@ body {
         display: none !important;
     }
 
+    .page-journal .alert {
+        display: none;
+    }
+
     .page-journal .row.g-3 {
         margin: 0;
         gap: 0;
@@ -435,7 +472,7 @@ body {
         border: 0;
         border-bottom: 1px solid #cfd6df;
         border-radius: 0;
-        font-size: 2.8rem;
+        font-size: 2.35rem;
         font-family: Georgia, 'Times New Roman', serif;
         font-weight: 700;
         padding: 0.55rem 0.7rem;
@@ -456,13 +493,18 @@ body {
     }
 
     .editor-content {
-        min-height: calc(100vh - 230px);
+        min-height: calc(100vh - 255px);
         border: 0;
         border-radius: 0;
         background: #f6f7f8;
         padding: 0.5rem 0.75rem 2rem;
-        font-size: 2rem;
+        font-size: 1.05rem;
+        line-height: 1.35;
         color: #7e838a;
+    }
+
+    .desktop-delete {
+        display: none;
     }
 
     .mobile-mode-list .editor-pane {

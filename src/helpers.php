@@ -57,3 +57,13 @@ function now_date(): string
 {
     return (new DateTimeImmutable('now'))->format('Y-m-d');
 }
+
+function format_entry_date(string $date): string
+{
+    $parsed = DateTimeImmutable::createFromFormat('Y-m-d', $date);
+    if (!$parsed) {
+        return $date;
+    }
+
+    return $parsed->format('j F Y');
+}
