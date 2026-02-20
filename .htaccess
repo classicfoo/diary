@@ -1,0 +1,9 @@
+DirectoryIndex public/index.php
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Route requests into /public so shared hosting can use repo root as document root.
+  RewriteCond %{REQUEST_URI} !^/public/
+  RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>

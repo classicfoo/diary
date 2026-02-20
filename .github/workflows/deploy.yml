@@ -24,7 +24,7 @@ jobs:
           FTP_DIR: ${{ secrets.FTP_DIR }}
         run: |
           set -euo pipefail
-          lftp -u "$FTP_USER","$FTP_PASS" ftp://$FTP_HOST <<EOF
+          lftp -u "$FTP_USER","$FTP_PASS" ftp://$FTP_HOST <<EOF2
           set ftp:ssl-allow no
           set net:timeout 20
           set net:max-retries 2
@@ -37,4 +37,4 @@ jobs:
             --exclude data/ \
             ./ "$FTP_DIR"
           quit
-          EOF
+          EOF2
