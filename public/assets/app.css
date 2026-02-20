@@ -135,6 +135,8 @@ body {
     min-height: 72px;
     resize: vertical;
     line-height: 1.2;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
 }
 
 .prism-editor {
@@ -598,7 +600,7 @@ body {
         padding: 0;
     }
 
-    #entry-title-input {
+    #entry-title-edit {
         border: 0;
         border-bottom: 1px solid #cfd6df;
         border-radius: 0;
@@ -613,8 +615,8 @@ body {
         white-space: pre-wrap;
     }
 
-    #entry-title-input::placeholder {
-        color: #9ea4ab;
+    #entry-title-edit:focus {
+        box-shadow: none;
     }
 
     .page-journal label.form-label {

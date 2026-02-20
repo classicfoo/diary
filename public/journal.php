@@ -115,7 +115,8 @@ require __DIR__ . '/../src/views/header.php';
                         <div class="row g-3">
                             <div class="col-12 col-md-8">
                                 <label class="form-label">Entry title</label>
-                                <textarea name="title" id="entry-title-input" class="form-control form-control-lg entry-title-input" rows="2" required><?= e((string) $activeEntry['title']) ?></textarea>
+                                <input type="hidden" name="title" id="entry-title-input" value="<?= e((string) $activeEntry['title']) ?>">
+                                <div id="entry-title-edit" class="form-control form-control-lg entry-title-input" contenteditable="true" role="textbox" aria-label="Entry title"><?= e((string) $activeEntry['title']) ?></div>
                             </div>
                             <div class="col-12 col-md-4">
                                 <label class="form-label">Date</label>
@@ -151,6 +152,7 @@ require __DIR__ . '/../src/views/header.php';
 
     const statusEl = document.getElementById('autosave-status');
     const titleInput = document.getElementById('entry-title-input');
+    const titleEditable = document.getElementById('entry-title-edit');
     const dateInput = document.getElementById('entry-date-input');
     const contentInput = document.getElementById('entry-content-input');
     const activeLink = document.querySelector('.entry-link.active');
@@ -171,8 +173,10 @@ require __DIR__ . '/../src/views/header.php';
     };
 
     const payload = () => {
+        const normalizedTitle = (titleEditable.textContent || '').replace(/\s+/g, ' ').trim();
+        titleInput.value = normalizedTitle;
         const formData = new FormData(form);
-        formData.set('title', titleInput.value);
+        formData.set('title', normalizedTitle);
         formData.set('entry_date', dateInput.value);
         formData.set('content', contentInput.value);
         return formData;
@@ -184,7 +188,8 @@ require __DIR__ . '/../src/views/header.php';
             return;
         }
 
-        if (titleInput.value.trim() === '' || dateInput.value.trim() === '') {
+        const normalizedTitle = (titleEditable.textContent || '').replace(/\s+/g, ' ').trim();
+        if (normalizedTitle === '' || dateInput.value.trim() === '') {
             setStatus('Title and date are required', 'autosave-error');
             return;
         }
@@ -206,7 +211,8 @@ require __DIR__ . '/../src/views/header.php';
             }
 
             setStatus('Saved', 'autosave-saved');
-            if (activeTitle) activeTitle.textContent = titleInput.value.trim() || 'Untitled';
+            titleInput.value = normalizedTitle;
+            if (activeTitle) activeTitle.textContent = normalizedTitle || 'Untitled';
             if (activeDate) {
                 const parsed = new Date(dateInput.value + 'T00:00:00');
                 const pretty = Number.isNaN(parsed.getTime())
@@ -234,10 +240,11 @@ require __DIR__ . '/../src/views/header.php';
     };
 
     ['input', 'change'].forEach((eventName) => {
-        titleInput.addEventListener(eventName, scheduleSave);
         dateInput.addEventListener(eventName, scheduleSave);
         contentInput.addEventListener(eventName, scheduleSave);
     });
+    titleEditable.addEventListener('input', scheduleSave);
+    titleEditable.addEventListener('blur', scheduleSave);
 
     if (window.initDiaryEntryEditor && editorEl) {
         window.initDiaryEntryEditor(editorEl, scheduleSave);
