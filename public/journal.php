@@ -44,6 +44,13 @@ require __DIR__ . '/../src/views/header.php';
         <form method="post" action="/logout.php" id="mobile-logout-form">
             <?= csrf_input() ?>
         </form>
+        <?php if ($isMobileEdit && $activeEntry): ?>
+        <form method="post" action="/entries_delete.php" id="mobile-delete-entry-form">
+            <?= csrf_input() ?>
+            <input type="hidden" name="journal_id" value="<?= (int) $journalId ?>">
+            <input type="hidden" name="entry_id" value="<?= (int) $activeEntry['id'] ?>">
+        </form>
+        <?php endif; ?>
         <?php if ($isMobileEdit): ?>
             <a href="/journal.php?id=<?= (int) $journalId ?>" class="mobile-icon-btn" title="All entries">≣</a>
             <button type="submit" form="mobile-create-entry-form" class="mobile-icon-btn" title="New entry">＋</button>
@@ -59,6 +66,9 @@ require __DIR__ . '/../src/views/header.php';
                     <li><a class="dropdown-item" href="/journal.php?id=<?= (int) $journalId ?>">All Entries</a></li>
                 <?php endif; ?>
                 <li><button class="dropdown-item" type="submit" form="mobile-create-entry-form">New Entry</button></li>
+                <?php if ($isMobileEdit && $activeEntry): ?>
+                    <li><button class="dropdown-item text-danger" type="button" id="mobile-delete-entry-btn">Delete Entry</button></li>
+                <?php endif; ?>
                 <li><button class="dropdown-item text-danger" type="submit" form="mobile-logout-form">Sign out</button></li>
             </ul>
         </div>
@@ -268,6 +278,8 @@ require __DIR__ . '/../src/views/header.php';
     const searchWrap = document.getElementById('entry-search-wrap');
     const searchInput = document.getElementById('entry-search');
     const entryLinks = Array.from(document.querySelectorAll('.entry-link'));
+    const mobileDeleteBtn = document.getElementById('mobile-delete-entry-btn');
+    const mobileDeleteForm = document.getElementById('mobile-delete-entry-form');
 
     if (searchToggle && searchWrap && searchInput) {
         searchToggle.addEventListener('click', () => {
@@ -283,6 +295,13 @@ require __DIR__ . '/../src/views/header.php';
                 const text = link.textContent.toLowerCase();
                 link.style.display = text.includes(query) ? '' : 'none';
             });
+        });
+    }
+
+    if (mobileDeleteBtn && mobileDeleteForm) {
+        mobileDeleteBtn.addEventListener('click', () => {
+            if (!window.confirm('Delete this entry?')) return;
+            mobileDeleteForm.submit();
         });
     }
 })();
