@@ -607,6 +607,10 @@ body {
         gap: 0;
     }
 
+    .page-journal #autosave-form {
+        gap: 0 !important;
+    }
+
     .page-journal .row.g-3 > div {
         padding: 0;
     }
@@ -618,10 +622,10 @@ body {
         font-size: 1.95rem;
         font-family: Georgia, 'Times New Roman', serif;
         font-weight: 700;
-        padding: 0.55rem 0.7rem;
+        padding: 0.3rem 0.65rem;
         color: #7b8086;
         background: #f6f7f8;
-        min-height: 3.1em;
+        min-height: 2.25em;
         overflow-wrap: break-word;
         white-space: pre-wrap;
     }
@@ -651,7 +655,7 @@ body {
 
     .prism-editor {
         border: 0;
-        border-top: 1px solid #cfd6df;
+        border-top: 0;
         border-bottom: 1px solid #cfd6df;
         border-radius: 0;
         background: #f6f7f8;
