@@ -85,26 +85,24 @@ require __DIR__ . '/../src/views/header.php';
     <div class="mobile-journal-grid mobile-only">
         <?php foreach ($journals as $journal): ?>
             <div class="mobile-journal-book" style="--journal-bg: <?= e((string) ($journal['bg_color'] ?? '#2f79bb')) ?>">
-                <a href="/journal.php?id=<?= (int) $journal['id'] ?>" class="mobile-journal-open">
-                    <div class="mobile-journal-panel">
-                        <h2><?= e((string) $journal['title']) ?></h2>
-                        <div class="mobile-journal-actions">
-                            <button type="button" class="rename-journal-btn" data-journal-id="<?= (int) $journal['id'] ?>" data-journal-title="<?= e((string) $journal['title']) ?>" aria-label="Edit journal">✎</button>
-                            <button type="button" class="lock-journal-btn" disabled aria-label="Lock journal" title="Coming soon">🔒</button>
-                            <button
-                                type="button"
-                                class="settings-journal-btn"
-                                data-bs-toggle="modal"
-                                data-bs-target="#journalSettingsModal"
-                                data-journal-id="<?= (int) $journal['id'] ?>"
-                                data-journal-title="<?= e((string) $journal['title']) ?>"
-                                data-journal-bg-color="<?= e((string) ($journal['bg_color'] ?? '#2f79bb')) ?>"
-                                data-journal-sort-order="<?= e((string) ($journal['sort_order'] ?? 'updated_desc')) ?>"
-                                aria-label="Journal settings"
-                            >⚙</button>
-                        </div>
+                <div class="mobile-journal-panel">
+                    <h2><a href="/journal.php?id=<?= (int) $journal['id'] ?>" class="mobile-journal-title-link"><?= e((string) $journal['title']) ?></a></h2>
+                    <div class="mobile-journal-actions">
+                        <button type="button" class="rename-journal-btn" data-journal-id="<?= (int) $journal['id'] ?>" data-journal-title="<?= e((string) $journal['title']) ?>" aria-label="Edit journal">✎</button>
+                        <button type="button" class="lock-journal-btn" disabled aria-label="Lock journal" title="Coming soon">🔒</button>
+                        <button
+                            type="button"
+                            class="settings-journal-btn"
+                            data-bs-toggle="modal"
+                            data-bs-target="#journalSettingsModal"
+                            data-journal-id="<?= (int) $journal['id'] ?>"
+                            data-journal-title="<?= e((string) $journal['title']) ?>"
+                            data-journal-bg-color="<?= e((string) ($journal['bg_color'] ?? '#2f79bb')) ?>"
+                            data-journal-sort-order="<?= e((string) ($journal['sort_order'] ?? 'updated_desc')) ?>"
+                            aria-label="Journal settings"
+                        >⚙</button>
                     </div>
-                </a>
+                </div>
             </div>
         <?php endforeach; ?>
     </div>

@@ -431,9 +431,15 @@ body {
         padding: 40px 20px;
     }
 
-    .mobile-journal-open {
+    .mobile-journal-title-link {
         text-decoration: none;
+        color: inherit;
         display: block;
+    }
+
+    .mobile-journal-title-link:hover,
+    .mobile-journal-title-link:focus {
+        color: inherit;
     }
 
     .mobile-journal-panel {
