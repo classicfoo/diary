@@ -1,9 +1,11 @@
-DirectoryIndex public/index.php
+DirectoryIndex index.php
 
 <IfModule mod_rewrite.c>
   RewriteEngine On
 
-  # Route requests into /public so shared hosting can use repo root as document root.
+  # Keep "/" on root index.php, but route app URLs/assets into /public.
   RewriteCond %{REQUEST_URI} !^/public/
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
   RewriteRule ^(.*)$ public/$1 [L]
 </IfModule>
