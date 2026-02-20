@@ -113,6 +113,38 @@ body {
     border-radius: 8px;
 }
 
+.autosave-status {
+    font-size: 0.84rem;
+    font-weight: 600;
+    padding: 0.25rem 0.6rem;
+    border-radius: 999px;
+    border: 1px solid transparent;
+}
+
+.autosave-idle {
+    color: #5f6b7a;
+    background: #eef1f5;
+    border-color: #d7dde5;
+}
+
+.autosave-saving {
+    color: #0f5132;
+    background: #d1e7dd;
+    border-color: #badbcc;
+}
+
+.autosave-saved {
+    color: #0a58ca;
+    background: #dbeafe;
+    border-color: #b6d4fe;
+}
+
+.autosave-error {
+    color: #842029;
+    background: #f8d7da;
+    border-color: #f1aeb5;
+}
+
 .editor-content {
     min-height: 420px;
     resize: vertical;
