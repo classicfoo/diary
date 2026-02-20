@@ -115,7 +115,7 @@ require __DIR__ . '/../src/views/header.php';
                         <div class="row g-3">
                             <div class="col-12 col-md-8">
                                 <label class="form-label">Entry title</label>
-                                <input type="text" name="title" id="entry-title-input" class="form-control form-control-lg" required value="<?= e((string) $activeEntry['title']) ?>">
+                                <textarea name="title" id="entry-title-input" class="form-control form-control-lg entry-title-input" rows="2" required><?= e((string) $activeEntry['title']) ?></textarea>
                             </div>
                             <div class="col-12 col-md-4">
                                 <label class="form-label">Date</label>
@@ -124,7 +124,10 @@ require __DIR__ . '/../src/views/header.php';
                         </div>
                         <div>
                             <label class="form-label">Your entry</label>
-                            <textarea name="content" id="entry-content-input" class="form-control editor-content" placeholder="Your entry here..."><?= e((string) $activeEntry['content']) ?></textarea>
+                            <div class="prism-editor diary-editor" id="entry-editor">
+                                <textarea name="content" id="entry-content-input" class="prism-editor__textarea editor-content" placeholder="Your entry here..."><?= e((string) $activeEntry['content']) ?></textarea>
+                                <pre class="prism-editor__preview"><code id="entry-content-preview"></code></pre>
+                            </div>
                         </div>
                     </form>
                     <hr class="desktop-delete">
@@ -140,6 +143,7 @@ require __DIR__ . '/../src/views/header.php';
     </section>
 </div>
 <?php if ($activeEntry): ?>
+<script src="/assets/journal-editor.js"></script>
 <script>
 (() => {
     const form = document.getElementById('autosave-form');
@@ -153,6 +157,7 @@ require __DIR__ . '/../src/views/header.php';
     const activeTitle = activeLink ? activeLink.querySelector('strong') : null;
     const activeDate = activeLink ? activeLink.querySelector('span') : null;
     const endpoint = form.getAttribute('action');
+    const editorEl = document.getElementById('entry-editor');
 
     let timer = null;
     let saving = false;
@@ -233,6 +238,10 @@ require __DIR__ . '/../src/views/header.php';
         dateInput.addEventListener(eventName, scheduleSave);
         contentInput.addEventListener(eventName, scheduleSave);
     });
+
+    if (window.initDiaryEntryEditor && editorEl) {
+        window.initDiaryEntryEditor(editorEl, scheduleSave);
+    }
 
     form.addEventListener('submit', (event) => {
         event.preventDefault();

@@ -22,6 +22,11 @@ body {
     padding-bottom: 1.5rem;
 }
 
+.app-main {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+}
+
 .app-topbar {
     background: #ef402b;
     border-bottom: 2px solid rgba(0, 0, 0, 0.08);
@@ -124,6 +129,103 @@ body {
 .editor-pane .card {
     border: none;
     border-radius: 8px;
+}
+
+.entry-title-input {
+    min-height: 72px;
+    resize: vertical;
+    line-height: 1.2;
+}
+
+.prism-editor {
+    position: relative;
+    display: grid;
+    border: 1px solid #ced4da;
+    border-radius: 0.375rem;
+    background: #fff;
+    cursor: text;
+}
+
+.prism-editor__textarea,
+.prism-editor__preview {
+    grid-area: 1 / 1 / 2 / 2;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 1.08rem;
+    line-height: 1.45;
+    tab-size: 4;
+}
+
+.prism-editor__textarea {
+    width: 100%;
+    min-height: 320px;
+    resize: vertical;
+    border: 0;
+    outline: none;
+    padding: 0.75rem;
+    background: transparent;
+    color: transparent;
+    caret-color: #353b45;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    overflow: auto;
+    position: relative;
+    z-index: 2;
+}
+
+.prism-editor__preview {
+    margin: 0;
+    padding: 0.75rem;
+    pointer-events: none;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    overflow: hidden;
+    color: #353b45;
+    z-index: 1;
+}
+
+.prism-editor__preview code {
+    display: block;
+    color: inherit;
+    line-height: inherit;
+}
+
+.prism-editor .code-line {
+    display: block;
+}
+
+.prism-editor .code-line-task {
+    color: #1d4ed8;
+}
+
+.prism-editor .code-line-note {
+    color: #1f7a3e;
+}
+
+.prism-editor .code-line-milestone {
+    color: #7a2424;
+}
+
+.prism-editor .code-line-heading {
+    font-weight: 700;
+}
+
+.prism-editor .code-line-done {
+    color: #6b7280;
+}
+
+.prism-editor .token-hashtag {
+    color: #364fc7;
+    font-weight: 700;
+}
+
+.prism-editor .token-date {
+    color: #0f766e;
+    font-weight: 600;
+}
+
+.prism-editor .token-link {
+    color: #0a58ca;
+    text-decoration: underline;
 }
 
 .autosave-status {
@@ -500,12 +602,15 @@ body {
         border: 0;
         border-bottom: 1px solid #cfd6df;
         border-radius: 0;
-        font-size: 2.35rem;
+        font-size: 1.95rem;
         font-family: Georgia, 'Times New Roman', serif;
         font-weight: 700;
         padding: 0.55rem 0.7rem;
         color: #7b8086;
         background: #f6f7f8;
+        min-height: 3.1em;
+        overflow-wrap: break-word;
+        white-space: pre-wrap;
     }
 
     #entry-title-input::placeholder {
@@ -529,6 +634,21 @@ body {
         font-size: 1.05rem;
         line-height: 1.35;
         color: #7e838a;
+    }
+
+    .prism-editor {
+        border: 0;
+        border-top: 1px solid #cfd6df;
+        border-bottom: 1px solid #cfd6df;
+        border-radius: 0;
+        background: #f6f7f8;
+    }
+
+    .prism-editor__textarea,
+    .prism-editor__preview {
+        font-size: 0.96rem;
+        line-height: 1.35;
+        padding: 0.55rem 0.75rem 2rem;
     }
 
     .desktop-delete {
