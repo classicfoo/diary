@@ -33,6 +33,10 @@ jobs:
             mirror -R --verbose --delete --no-perms \
             --exclude-glob node_modules/** \
             --exclude-glob .env \
+            --exclude-glob *.sqlite \
+            --exclude-glob *.sqlite3 \
+            --exclude-glob storage/*.sqlite \
+            --exclude-glob storage/*.sqlite3 \
             --exclude .git/ \
             --exclude .github/ \
             --exclude data/ \
