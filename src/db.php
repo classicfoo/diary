@@ -34,6 +34,8 @@ function initialize_database(PDO $db): void
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             user_id INTEGER NOT NULL,
             title TEXT NOT NULL,
+            bg_color TEXT NOT NULL DEFAULT "#2f79bb",
+            sort_order TEXT NOT NULL DEFAULT "updated_desc",
             created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
             updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
             FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
@@ -52,4 +54,23 @@ function initialize_database(PDO $db): void
             FOREIGN KEY (journal_id) REFERENCES journals(id) ON DELETE CASCADE
         )'
     );
+
+    ensure_journals_columns($db);
+}
+
+function ensure_journals_columns(PDO $db): void
+{
+    $columns = $db->query('PRAGMA table_info(journals)')->fetchAll();
+    $names = [];
+    foreach ($columns as $column) {
+        $names[] = (string) ($column['name'] ?? '');
+    }
+
+    if (!in_array('bg_color', $names, true)) {
+        $db->exec('ALTER TABLE journals ADD COLUMN bg_color TEXT NOT NULL DEFAULT "#2f79bb"');
+    }
+
+    if (!in_array('sort_order', $names, true)) {
+        $db->exec('ALTER TABLE journals ADD COLUMN sort_order TEXT NOT NULL DEFAULT "updated_desc"');
+    }
 }

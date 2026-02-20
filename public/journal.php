@@ -19,7 +19,7 @@ if (!$journal) {
     redirect('/dashboard.php');
 }
 
-$entries = list_entries($db, $journalId);
+$entries = list_entries($db, $journalId, (string) ($journal['sort_order'] ?? 'updated_desc'));
 $activeEntryId = isset($_GET['entry']) ? (int) $_GET['entry'] : (isset($entries[0]['id']) ? (int) $entries[0]['id'] : 0);
 $activeEntry = $activeEntryId > 0 ? get_entry($db, $activeEntryId, $journalId) : null;
 $mobileView = (string) ($_GET['view'] ?? 'list');

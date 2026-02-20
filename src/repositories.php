@@ -42,10 +42,12 @@ function list_journals(PDO $db, int $userId): array
 
 function create_journal(PDO $db, int $userId, string $title): int
 {
-    $stmt = $db->prepare('INSERT INTO journals (user_id, title) VALUES (:user_id, :title)');
+    $stmt = $db->prepare('INSERT INTO journals (user_id, title, bg_color, sort_order) VALUES (:user_id, :title, :bg_color, :sort_order)');
     $stmt->execute([
         'user_id' => $userId,
         'title' => trim($title),
+        'bg_color' => '#2f79bb',
+        'sort_order' => 'updated_desc',
     ]);
 
     return (int) $db->lastInsertId();
@@ -60,9 +62,17 @@ function get_journal(PDO $db, int $journalId, int $userId): ?array
     return $journal ?: null;
 }
 
-function list_entries(PDO $db, int $journalId): array
+function list_entries(PDO $db, int $journalId, string $sortOrder = 'updated_desc'): array
 {
-    $stmt = $db->prepare('SELECT * FROM entries WHERE journal_id = :journal_id ORDER BY entry_date DESC, updated_at DESC');
+    $allowed = [
+        'created_desc' => 'created_at DESC',
+        'created_asc' => 'created_at ASC',
+        'updated_desc' => 'updated_at DESC',
+        'updated_asc' => 'updated_at ASC',
+    ];
+    $order = $allowed[$sortOrder] ?? $allowed['updated_desc'];
+
+    $stmt = $db->prepare('SELECT * FROM entries WHERE journal_id = :journal_id ORDER BY ' . $order);
     $stmt->execute(['journal_id' => $journalId]);
 
     return $stmt->fetchAll();
@@ -126,4 +136,40 @@ function touch_journal(PDO $db, int $journalId): void
 {
     $stmt = $db->prepare('UPDATE journals SET updated_at = CURRENT_TIMESTAMP WHERE id = :id');
     $stmt->execute(['id' => $journalId]);
+}
+
+function update_journal_title(PDO $db, int $journalId, int $userId, string $title): void
+{
+    $stmt = $db->prepare(
+        'UPDATE journals
+         SET title = :title,
+             updated_at = CURRENT_TIMESTAMP
+         WHERE id = :id AND user_id = :user_id'
+    );
+    $stmt->execute([
+        'title' => trim($title),
+        'id' => $journalId,
+        'user_id' => $userId,
+    ]);
+}
+
+function update_journal_settings(PDO $db, int $journalId, int $userId, string $bgColor, string $sortOrder): void
+{
+    $allowedSort = ['created_desc', 'created_asc', 'updated_desc', 'updated_asc'];
+    $safeSort = in_array($sortOrder, $allowedSort, true) ? $sortOrder : 'updated_desc';
+    $safeColor = preg_match('/^#[0-9a-fA-F]{6}$/', $bgColor) ? $bgColor : '#2f79bb';
+
+    $stmt = $db->prepare(
+        'UPDATE journals
+         SET bg_color = :bg_color,
+             sort_order = :sort_order,
+             updated_at = CURRENT_TIMESTAMP
+         WHERE id = :id AND user_id = :user_id'
+    );
+    $stmt->execute([
+        'bg_color' => $safeColor,
+        'sort_order' => $safeSort,
+        'id' => $journalId,
+        'user_id' => $userId,
+    ]);
 }
