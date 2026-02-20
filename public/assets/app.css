@@ -13,6 +13,10 @@ body {
     color: #2c3440;
 }
 
+.mobile-only {
+    display: none;
+}
+
 .app-topbar {
     background: #ef402b;
     border-bottom: 2px solid rgba(0, 0, 0, 0.08);
@@ -102,6 +106,10 @@ body {
     opacity: 0.85;
 }
 
+.entry-link p {
+    display: none;
+}
+
 .entry-link:hover,
 .entry-link.active {
     background: #2d84c7;
@@ -165,9 +173,23 @@ body {
 }
 
 @media (max-width: 767px) {
-    main.container {
-        padding-left: 0.75rem;
-        padding-right: 0.75rem;
+    .mobile-only {
+        display: block;
+    }
+
+    .desktop-section {
+        display: none !important;
+    }
+
+    .page-dashboard .app-topbar,
+    .page-journal .app-topbar {
+        display: none;
+    }
+
+    .page-dashboard .app-main,
+    .page-journal .app-main {
+        max-width: 100%;
+        padding: 0;
     }
 
     .app-logo {
@@ -191,23 +213,263 @@ body {
         width: 100%;
     }
 
+    .mobile-page-header {
+        background: #1e1f23;
+        color: #fff;
+        min-height: 52px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 0.9rem;
+    }
+
+    .mobile-page-header h1 {
+        font-size: 1.05rem;
+        margin: 0;
+        font-weight: 700;
+        max-width: 48vw;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
+    .mobile-back {
+        color: #fff;
+        text-decoration: none;
+        font-size: 1.6rem;
+        line-height: 1;
+    }
+
+    .mobile-icons {
+        display: flex;
+        align-items: center;
+        gap: 0.45rem;
+    }
+
+    .icon-dot {
+        color: #d4d8df;
+        font-size: 1.2rem;
+        line-height: 1;
+    }
+
+    .pill {
+        border: 1px solid #8b9099;
+        border-radius: 999px;
+        color: #eceff4;
+        font-size: 0.68rem;
+        padding: 0.12rem 0.35rem;
+        font-weight: 700;
+    }
+
+    .mobile-new-journal {
+        padding: 0.75rem 0.9rem 0.2rem;
+        display: grid;
+        gap: 0.55rem;
+    }
+
+    .mobile-new-journal .form-control {
+        display: none;
+    }
+
+    .mobile-new-journal .btn {
+        width: 100%;
+        background: #3a99d8;
+        border: 0;
+        height: 42px;
+        font-size: 1.1rem;
+    }
+
+    .mobile-journal-grid {
+        padding: 0.7rem 0.9rem 1.4rem;
+        display: grid;
+        gap: 0.8rem;
+    }
+
+    .mobile-journal-book {
+        display: block;
+        min-height: 305px;
+        border-radius: 4px;
+        text-decoration: none;
+        background: linear-gradient(165deg, #48a2e0 0%, #2f78bc 100%);
+        position: relative;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.18);
+        border-left: 26px solid #4c5665;
+        padding: 40px 20px;
+    }
+
+    .mobile-journal-panel {
+        background: #eceff3;
+        border-radius: 6px;
+        overflow: hidden;
+    }
+
+    .mobile-journal-panel h2 {
+        margin: 0;
+        color: #515862;
+        padding: 18px 10px;
+        text-align: center;
+        font-family: Georgia, 'Times New Roman', serif;
+        font-size: 2rem;
+    }
+
+    .mobile-journal-actions {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        border-top: 1px solid #d4dbe3;
+    }
+
+    .mobile-journal-actions span {
+        color: #757f8d;
+        text-align: center;
+        padding: 10px 0;
+        border-right: 1px solid #d4dbe3;
+        font-size: 1.35rem;
+    }
+
+    .mobile-journal-actions span:last-child {
+        border-right: 0;
+    }
+
     .journal-workspace {
+        background: #dcdee2;
         gap: 0.75rem;
+        min-height: calc(100vh - 52px);
     }
 
     .journal-sidebar {
-        border-radius: 6px;
+        border-radius: 0;
+        background: #dcdee2;
+        color: #444c58;
+    }
+
+    .sidebar-head {
+        display: none;
+    }
+
+    .journal-sidebar form.p-3 {
+        border: 0 !important;
+        padding: 0.8rem 1rem !important;
+    }
+
+    .journal-sidebar .btn {
+        width: 100%;
+        background: #3a99d8;
+        border: 0;
+        font-size: 2rem;
+        line-height: 1;
+        padding: 0.6rem;
+        border-radius: 4px;
+    }
+
+    .journal-sidebar .btn::after {
+        content: ' New Entry';
+        font-size: 0.8rem;
+        vertical-align: middle;
     }
 
     .entry-link {
-        padding: 0.65rem 0.85rem;
+        margin: 0.6rem 1rem;
+        border-radius: 4px;
+        background: #f1f2f4;
+        color: #4f5762;
+        padding: 0.8rem 0.75rem;
+        border: 1px solid #d9dde3;
+    }
+
+    .entry-link strong {
+        color: #565e69;
+        font-family: Georgia, 'Times New Roman', serif;
+        font-size: 1.14rem;
+        line-height: 1.2;
+    }
+
+    .entry-link p {
+        display: block;
+        margin: 0.28rem 0 0;
+        color: #5f6875;
+        font-size: 0.68rem;
+        line-height: 1.2;
+    }
+
+    .entry-link span {
+        margin-top: 0.45rem;
+        color: #9ca3ad;
+        opacity: 1;
+        text-transform: uppercase;
+        font-weight: 700;
+        font-size: 0.72rem;
     }
 
     .editor-pane .card-body {
-        padding: 0.9rem;
+        padding: 0;
+    }
+
+    .editor-pane .card {
+        border-radius: 0;
+        box-shadow: none !important;
+    }
+
+    .mobile-date-strip {
+        background: #edf0f4;
+        color: #89929e;
+        border-top: 1px solid #cfd6df;
+        border-bottom: 1px solid #cfd6df;
+        padding: 0.5rem 0.75rem;
+        font-size: 0.86rem;
+    }
+
+    .editor-title-row {
+        display: none !important;
+    }
+
+    .page-journal .row.g-3 {
+        margin: 0;
+        gap: 0;
+    }
+
+    .page-journal .row.g-3 > div {
+        padding: 0;
+    }
+
+    #entry-title-input {
+        border: 0;
+        border-bottom: 1px solid #cfd6df;
+        border-radius: 0;
+        font-size: 2.8rem;
+        font-family: Georgia, 'Times New Roman', serif;
+        font-weight: 700;
+        padding: 0.55rem 0.7rem;
+        color: #7b8086;
+        background: #f6f7f8;
+    }
+
+    #entry-title-input::placeholder {
+        color: #9ea4ab;
+    }
+
+    .page-journal label.form-label {
+        display: none;
+    }
+
+    #entry-date-input {
+        display: none;
     }
 
     .editor-content {
-        min-height: 260px;
+        min-height: calc(100vh - 230px);
+        border: 0;
+        border-radius: 0;
+        background: #f6f7f8;
+        padding: 0.5rem 0.75rem 2rem;
+        font-size: 2rem;
+        color: #7e838a;
+    }
+
+    .mobile-mode-list .editor-pane {
+        display: none;
+    }
+
+    .mobile-mode-edit .journal-sidebar {
+        display: none;
     }
 }

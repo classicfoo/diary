@@ -9,9 +9,19 @@ $user = get_user($db, current_user_id());
 $journals = list_journals($db, (int) $user['id']);
 
 $pageTitle = 'Dashboard';
+$pageClass = 'page-dashboard';
 require __DIR__ . '/../src/views/header.php';
 ?>
-<div class="d-flex flex-wrap gap-3 align-items-center justify-content-between mb-4">
+<div class="mobile-page-header mobile-only">
+    <h1>Journals</h1>
+    <div class="mobile-icons">
+        <span class="pill">PRO</span>
+        <span class="icon-dot">+</span>
+        <span class="icon-dot">⋮</span>
+    </div>
+</div>
+
+<div class="d-flex flex-wrap gap-3 align-items-center justify-content-between mb-4 desktop-section">
     <h1 class="h4 m-0">Displaying <?= count($journals) ?> journal<?= count($journals) === 1 ? '' : 's' ?></h1>
     <form method="post" action="/journals_create.php" class="d-flex gap-2 dashboard-create-form">
         <?= csrf_input() ?>
@@ -19,6 +29,12 @@ require __DIR__ . '/../src/views/header.php';
         <button class="btn btn-primary" type="submit">New Journal</button>
     </form>
 </div>
+
+<form method="post" action="/journals_create.php" class="mobile-new-journal mobile-only">
+    <?= csrf_input() ?>
+    <input type="text" name="title" class="form-control" placeholder="New journal" required>
+    <button class="btn btn-primary" type="submit">+ New Journal</button>
+</form>
 
 <?php if (!$journals): ?>
     <div class="card dashboard-empty shadow-sm">
@@ -28,7 +44,7 @@ require __DIR__ . '/../src/views/header.php';
         </div>
     </div>
 <?php else: ?>
-    <div class="row g-4">
+    <div class="row g-4 desktop-section">
         <?php foreach ($journals as $journal): ?>
             <div class="col-12 col-md-6 col-lg-4">
                 <div class="card journal-card shadow-sm h-100">
@@ -39,6 +55,20 @@ require __DIR__ . '/../src/views/header.php';
                     </div>
                 </div>
             </div>
+        <?php endforeach; ?>
+    </div>
+    <div class="mobile-journal-grid mobile-only">
+        <?php foreach ($journals as $journal): ?>
+            <a href="/journal.php?id=<?= (int) $journal['id'] ?>" class="mobile-journal-book">
+                <div class="mobile-journal-panel">
+                    <h2><?= e((string) $journal['title']) ?></h2>
+                    <div class="mobile-journal-actions">
+                        <span>✎</span>
+                        <span>🔒</span>
+                        <span>⚙</span>
+                    </div>
+                </div>
+            </a>
         <?php endforeach; ?>
     </div>
 <?php endif; ?>

@@ -22,11 +22,33 @@ if (!$journal) {
 $entries = list_entries($db, $journalId);
 $activeEntryId = isset($_GET['entry']) ? (int) $_GET['entry'] : (isset($entries[0]['id']) ? (int) $entries[0]['id'] : 0);
 $activeEntry = $activeEntryId > 0 ? get_entry($db, $activeEntryId, $journalId) : null;
+$mobileView = (string) ($_GET['view'] ?? 'list');
+$isMobileEdit = $mobileView === 'edit' && $activeEntry;
 
 $pageTitle = (string) $journal['title'];
+$pageClass = 'page-journal';
 require __DIR__ . '/../src/views/header.php';
 ?>
-<div class="journal-workspace">
+<div class="mobile-page-header mobile-only">
+    <?php if ($isMobileEdit): ?>
+        <a href="/journal.php?id=<?= (int) $journalId ?>" class="mobile-back">←</a>
+    <?php else: ?>
+        <a href="/dashboard.php" class="mobile-back">←</a>
+    <?php endif; ?>
+    <h1><?= e((string) $journal['title']) ?></h1>
+    <div class="mobile-icons">
+        <?php if ($isMobileEdit): ?>
+            <span class="icon-dot">⇩</span>
+            <span class="icon-dot">＋</span>
+        <?php else: ?>
+            <span class="icon-dot">⌕</span>
+            <span class="icon-dot">＋</span>
+        <?php endif; ?>
+        <span class="icon-dot">⋮</span>
+    </div>
+</div>
+
+<div class="journal-workspace <?= $isMobileEdit ? 'mobile-mode-edit' : 'mobile-mode-list' ?>">
     <aside class="journal-sidebar">
         <div class="sidebar-head">
             <h2 class="h5 mb-0"><?= e((string) $journal['title']) ?></h2>
@@ -41,8 +63,9 @@ require __DIR__ . '/../src/views/header.php';
                 <p class="text-light opacity-75 small p-3 mb-0">No entries yet.</p>
             <?php endif; ?>
             <?php foreach ($entries as $entry): ?>
-                <a class="entry-link <?= $activeEntry && (int) $activeEntry['id'] === (int) $entry['id'] ? 'active' : '' ?>" href="/journal.php?id=<?= (int) $journalId ?>&entry=<?= (int) $entry['id'] ?>">
+                <a class="entry-link <?= $activeEntry && (int) $activeEntry['id'] === (int) $entry['id'] ? 'active' : '' ?>" href="/journal.php?id=<?= (int) $journalId ?>&entry=<?= (int) $entry['id'] ?>&view=edit">
                     <strong><?= e((string) $entry['title']) ?></strong>
+                    <p><?= e(mb_substr((string) $entry['content'], 0, 90)) ?><?= mb_strlen((string) $entry['content']) > 90 ? '...' : '' ?></p>
                     <span><?= e((string) $entry['entry_date']) ?></span>
                 </a>
             <?php endforeach; ?>
@@ -60,11 +83,12 @@ require __DIR__ . '/../src/views/header.php';
         <?php else: ?>
             <div class="card shadow-sm">
                 <div class="card-body">
+                    <div class="mobile-date-strip mobile-only"><?= e((string) $activeEntry['entry_date']) ?></div>
                     <form method="post" action="/entries_autosave.php" class="vstack gap-3" id="autosave-form">
                         <?= csrf_input() ?>
                         <input type="hidden" name="journal_id" value="<?= (int) $journalId ?>">
                         <input type="hidden" name="entry_id" value="<?= (int) $activeEntry['id'] ?>">
-                        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+                        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 editor-title-row">
                             <h3 class="h4 m-0">Edit Entry</h3>
                             <span id="autosave-status" class="autosave-status autosave-idle">Autosave ready</span>
                         </div>

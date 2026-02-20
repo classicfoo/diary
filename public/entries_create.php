@@ -24,4 +24,4 @@ $entryDate = now_date();
 $entryId = create_entry($db, $journalId, $title, '', $entryDate);
 
 flash('success', 'Entry created.');
-redirect('/journal.php?id=' . $journalId . '&entry=' . $entryId);
+redirect('/journal.php?id=' . $journalId . '&entry=' . $entryId . '&view=edit');
