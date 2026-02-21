@@ -34,6 +34,7 @@ if (is_post()) {
 }
 
 $pageTitle = 'Sign in';
+$brandText = 'Journal';
 require __DIR__ . '/../src/views/header.php';
 ?>
 <div class="row justify-content-center auth-wrap">

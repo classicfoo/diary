@@ -11,6 +11,7 @@
 <body class="<?= e($pageClass ?? '') ?>">
 <?php
 $flash = consume_flash();
+$brandText = $brandText ?? 'penzu';
 $flashTypeMap = [
     'success' => 'toast-success',
     'danger' => 'toast-danger',
@@ -34,7 +35,7 @@ $flashClass = $flash ? ($flashTypeMap[$flash['type']] ?? 'toast-info') : '';
 </nav>
 <?php else: ?>
 <nav class="navbar app-topbar px-3 py-2 justify-content-center">
-    <a class="navbar-brand app-logo m-0" href="/">penzu</a>
+    <a class="navbar-brand app-logo m-0" href="/"><?= e((string) $brandText) ?></a>
 </nav>
 <?php endif; ?>
 
