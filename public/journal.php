@@ -173,7 +173,13 @@ require __DIR__ . '/../src/views/header.php';
     let timer = null;
     let saving = false;
     let pending = false;
-    const normalizeTitle = () => (titleEditable.textContent || '').replace(/\s+/g, ' ').trim();
+    const toTitleCase = (value) => value
+        .toLowerCase()
+        .replace(/\b([a-z])/g, (match) => match.toUpperCase());
+    const normalizeTitle = () => {
+        const raw = (titleEditable.textContent || '').replace(/\s+/g, ' ').trim();
+        return raw ? toTitleCase(raw) : '';
+    };
     const buildState = () => JSON.stringify({
         title: normalizeTitle(),
         entry_date: dateInput.value.trim(),
@@ -232,6 +238,7 @@ require __DIR__ . '/../src/views/header.php';
 
             setStatus('Saved', 'autosave-saved');
             titleInput.value = normalizedTitle;
+            titleEditable.textContent = normalizedTitle;
             lastSavedState = buildState();
             if (activeTitle) activeTitle.textContent = normalizedTitle || 'Untitled';
             if (activeDate) {

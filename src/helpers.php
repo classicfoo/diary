@@ -58,6 +58,16 @@ function now_date(): string
     return (new DateTimeImmutable('now'))->format('Y-m-d');
 }
 
+function to_title_case(string $value): string
+{
+    $normalized = preg_replace('/\s+/', ' ', trim($value)) ?? '';
+    if ($normalized === '') {
+        return '';
+    }
+
+    return mb_convert_case($normalized, MB_CASE_TITLE, 'UTF-8');
+}
+
 function format_entry_date(string $date): string
 {
     $parsed = DateTimeImmutable::createFromFormat('Y-m-d', $date);
