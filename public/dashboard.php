@@ -157,40 +157,7 @@ require __DIR__ . '/../src/views/header.php';
                     <div class="mb-3">
                         <label class="form-label">Background color</label>
                         <input type="hidden" name="bg_color" id="settings-bg-color" value="#2f79bb">
-                        <div class="journal-color-picker" id="journal-color-picker" role="group" aria-label="Journal background color">
-                            <button type="button" class="journal-color-swatch" data-color="#2f79bb" style="--swatch:#2f79bb" aria-label="Blue"></button>
-                            <button type="button" class="journal-color-swatch" data-color="#1f9d8f" style="--swatch:#1f9d8f" aria-label="Teal"></button>
-                            <button type="button" class="journal-color-swatch" data-color="#355c7d" style="--swatch:#355c7d" aria-label="Slate blue"></button>
-                            <button type="button" class="journal-color-swatch" data-color="#6c5ce7" style="--swatch:#6c5ce7" aria-label="Indigo"></button>
-                            <button type="button" class="journal-color-swatch" data-color="#7a4e2d" style="--swatch:#7a4e2d" aria-label="Brown"></button>
-                            <button type="button" class="journal-color-swatch" data-color="#cc5a71" style="--swatch:#cc5a71" aria-label="Rose"></button>
-                            <button type="button" class="journal-color-swatch" data-color="#2d6a4f" style="--swatch:#2d6a4f" aria-label="Forest"></button>
-                            <button type="button" class="journal-color-swatch" data-color="#283044" style="--swatch:#283044" aria-label="Navy gray"></button>
-                            <button type="button" class="journal-color-swatch" data-color="#264653" style="--swatch:#264653" aria-label="Deep teal"></button>
-                            <button type="button" class="journal-color-swatch" data-color="#2a9d8f" style="--swatch:#2a9d8f" aria-label="Mint teal"></button>
-                            <button type="button" class="journal-color-swatch" data-color="#457b9d" style="--swatch:#457b9d" aria-label="Sky slate"></button>
-                            <button type="button" class="journal-color-swatch" data-color="#1d3557" style="--swatch:#1d3557" aria-label="Midnight blue"></button>
-                            <button type="button" class="journal-color-swatch" data-color="#4c6ef5" style="--swatch:#4c6ef5" aria-label="Royal blue"></button>
-                            <button type="button" class="journal-color-swatch" data-color="#3b5bdb" style="--swatch:#3b5bdb" aria-label="Cobalt"></button>
-                            <button type="button" class="journal-color-swatch" data-color="#5f3dc4" style="--swatch:#5f3dc4" aria-label="Deep violet"></button>
-                            <button type="button" class="journal-color-swatch" data-color="#7048e8" style="--swatch:#7048e8" aria-label="Violet"></button>
-                            <button type="button" class="journal-color-swatch" data-color="#7b2cbf" style="--swatch:#7b2cbf" aria-label="Plum"></button>
-                            <button type="button" class="journal-color-swatch" data-color="#9d4edd" style="--swatch:#9d4edd" aria-label="Purple"></button>
-                            <button type="button" class="journal-color-swatch" data-color="#b5179e" style="--swatch:#b5179e" aria-label="Magenta"></button>
-                            <button type="button" class="journal-color-swatch" data-color="#d6336c" style="--swatch:#d6336c" aria-label="Pink"></button>
-                            <button type="button" class="journal-color-swatch" data-color="#c2255c" style="--swatch:#c2255c" aria-label="Raspberry"></button>
-                            <button type="button" class="journal-color-swatch" data-color="#e76f51" style="--swatch:#e76f51" aria-label="Coral"></button>
-                            <button type="button" class="journal-color-swatch" data-color="#f4a261" style="--swatch:#f4a261" aria-label="Orange"></button>
-                            <button type="button" class="journal-color-swatch" data-color="#f77f00" style="--swatch:#f77f00" aria-label="Amber"></button>
-                            <button type="button" class="journal-color-swatch" data-color="#bc6c25" style="--swatch:#bc6c25" aria-label="Ochre"></button>
-                            <button type="button" class="journal-color-swatch" data-color="#8d5524" style="--swatch:#8d5524" aria-label="Umber"></button>
-                            <button type="button" class="journal-color-swatch" data-color="#606c38" style="--swatch:#606c38" aria-label="Olive"></button>
-                            <button type="button" class="journal-color-swatch" data-color="#588157" style="--swatch:#588157" aria-label="Sage"></button>
-                            <button type="button" class="journal-color-swatch" data-color="#2b9348" style="--swatch:#2b9348" aria-label="Green"></button>
-                            <button type="button" class="journal-color-swatch" data-color="#386641" style="--swatch:#386641" aria-label="Pine"></button>
-                            <button type="button" class="journal-color-swatch" data-color="#495057" style="--swatch:#495057" aria-label="Gray"></button>
-                            <button type="button" class="journal-color-swatch" data-color="#343a40" style="--swatch:#343a40" aria-label="Charcoal"></button>
-                        </div>
+                        <div class="hsv-picker" data-hsv-input="settings-bg-color"></div>
                     </div>
 
                     <div>
@@ -225,16 +192,7 @@ require __DIR__ . '/../src/views/header.php';
                     <?= csrf_input() ?>
                     <label class="form-label">Navbar color</label>
                     <input type="hidden" name="nav_color" id="app-nav-color-input" value="<?= e((string) ($user['nav_color'] ?? '#1e1f23')) ?>">
-                    <div class="journal-color-picker" role="group" aria-label="Navbar color">
-                        <button type="button" class="journal-color-swatch app-nav-swatch" data-color="#1e1f23" style="--swatch:#1e1f23" aria-label="Black"></button>
-                        <button type="button" class="journal-color-swatch app-nav-swatch" data-color="#2f79bb" style="--swatch:#2f79bb" aria-label="Blue"></button>
-                        <button type="button" class="journal-color-swatch app-nav-swatch" data-color="#1f9d8f" style="--swatch:#1f9d8f" aria-label="Teal"></button>
-                        <button type="button" class="journal-color-swatch app-nav-swatch" data-color="#5f3dc4" style="--swatch:#5f3dc4" aria-label="Purple"></button>
-                        <button type="button" class="journal-color-swatch app-nav-swatch" data-color="#cc5a71" style="--swatch:#cc5a71" aria-label="Rose"></button>
-                        <button type="button" class="journal-color-swatch app-nav-swatch" data-color="#2d6a4f" style="--swatch:#2d6a4f" aria-label="Forest"></button>
-                        <button type="button" class="journal-color-swatch app-nav-swatch" data-color="#bc6c25" style="--swatch:#bc6c25" aria-label="Brown"></button>
-                        <button type="button" class="journal-color-swatch app-nav-swatch" data-color="#343a40" style="--swatch:#343a40" aria-label="Dark gray"></button>
-                    </div>
+                    <div class="hsv-picker" data-hsv-input="app-nav-color-input"></div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -245,6 +203,7 @@ require __DIR__ . '/../src/views/header.php';
     </div>
 </div>
 
+<script src="/assets/hsv-color-picker.js"></script>
 <script>
 (() => {
     const mobileNewJournalBtn = document.getElementById('mobile-new-journal-btn');
@@ -283,33 +242,6 @@ require __DIR__ . '/../src/views/header.php';
         });
     }
 
-    const appNavColorInput = document.getElementById('app-nav-color-input');
-    const appNavSwatches = Array.from(document.querySelectorAll('.app-nav-swatch'));
-    if (appNavColorInput && appNavSwatches.length > 0) {
-        const normalizeHex = (value) => {
-            const v = (value || '').trim();
-            return /^#[0-9a-fA-F]{6}$/.test(v) ? v.toLowerCase() : '#1e1f23';
-        };
-
-        const selectNavColor = (value) => {
-            const next = normalizeHex(value);
-            appNavColorInput.value = next;
-            appNavSwatches.forEach((swatch) => {
-                const isActive = normalizeHex(swatch.dataset.color) === next;
-                swatch.classList.toggle('active', isActive);
-                swatch.setAttribute('aria-pressed', isActive ? 'true' : 'false');
-            });
-        };
-
-        appNavSwatches.forEach((swatch) => {
-            swatch.addEventListener('click', () => {
-                selectNavColor(swatch.dataset.color || '#1e1f23');
-            });
-        });
-
-        selectNavColor(appNavColorInput.value);
-    }
-
     const renameButtons = document.querySelectorAll('.rename-journal-btn');
     const renameForm = document.getElementById('rename-journal-form');
     const renameId = document.getElementById('rename-journal-id');
@@ -340,29 +272,9 @@ require __DIR__ . '/../src/views/header.php';
     const deleteJournalForm = document.getElementById('delete-journal-form');
     const deleteJournalId = document.getElementById('delete-journal-id');
 
-    const settingsColorInput = document.getElementById('settings-bg-color');
-    const colorSwatches = Array.from(document.querySelectorAll('.journal-color-swatch'));
-
-    const normalizeHex = (value) => {
-        const v = (value || '').trim();
-        return /^#[0-9a-fA-F]{6}$/.test(v) ? v.toLowerCase() : '#2f79bb';
-    };
-
-    const selectColor = (value) => {
-        const selected = normalizeHex(value);
-        settingsColorInput.value = selected;
-        colorSwatches.forEach((swatch) => {
-            const isActive = normalizeHex(swatch.dataset.color) === selected;
-            swatch.classList.toggle('active', isActive);
-            swatch.setAttribute('aria-pressed', isActive ? 'true' : 'false');
-        });
-    };
-
-    colorSwatches.forEach((swatch) => {
-        swatch.addEventListener('click', () => {
-            selectColor(swatch.dataset.color || '#2f79bb');
-        });
-    });
+    if (window.initHsvColorPickers) {
+        window.initHsvColorPickers(document);
+    }
 
     settingsModal.addEventListener('show.bs.modal', (event) => {
         const trigger = event.relatedTarget;
@@ -375,7 +287,10 @@ require __DIR__ . '/../src/views/header.php';
 
         document.getElementById('settings-journal-id').value = id;
         document.getElementById('settings-journal-title').value = title;
-        selectColor(bgColor);
+        document.getElementById('settings-bg-color').value = bgColor;
+        if (window.initHsvColorPickers) {
+            window.initHsvColorPickers(settingsModal);
+        }
         document.getElementById('settings-sort-order').value = sortOrder;
         deleteJournalId.value = id;
     });
@@ -384,6 +299,15 @@ require __DIR__ . '/../src/views/header.php';
         deleteJournalBtn.addEventListener('click', () => {
             if (!window.confirm('Delete this journal and all its entries?')) return;
             deleteJournalForm.submit();
+        });
+    }
+
+    const appSettingsModal = document.getElementById('appSettingsModal');
+    if (appSettingsModal) {
+        appSettingsModal.addEventListener('show.bs.modal', () => {
+            if (window.initHsvColorPickers) {
+                window.initHsvColorPickers(appSettingsModal);
+            }
         });
     }
 })();

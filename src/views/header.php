@@ -8,11 +8,11 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="/assets/app.css" rel="stylesheet">
 </head>
-<body class="<?= e($pageClass ?? '') ?>">
 <?php
 $flash = consume_flash();
 $brandText = $brandText ?? 'Journal';
 $appNavColor = $_SESSION['app_nav_color'] ?? '#1e1f23';
+$safeNavColor = preg_match('/^#[0-9a-fA-F]{6}$/', (string) $appNavColor) ? (string) $appNavColor : '#1e1f23';
 $flashTypeMap = [
     'success' => 'toast-success',
     'danger' => 'toast-danger',
@@ -21,8 +21,9 @@ $flashTypeMap = [
 ];
 $flashClass = $flash ? ($flashTypeMap[$flash['type']] ?? 'toast-info') : '';
 ?>
+<body class="<?= e($pageClass ?? '') ?>"<?= is_authenticated() ? ' style="--app-nav-color: ' . e($safeNavColor) . ';"' : '' ?>>
 <?php if (is_authenticated()): ?>
-<nav class="navbar navbar-expand-lg app-topbar px-3 py-2" style="background: <?= e((string) $appNavColor) ?>;">
+<nav class="navbar navbar-expand-lg app-topbar px-3 py-2">
     <div class="container-fluid">
         <a class="navbar-brand app-logo" href="/dashboard.php"><?= e((string) $brandText) ?></a>
         <div class="ms-auto d-flex align-items-center gap-3">

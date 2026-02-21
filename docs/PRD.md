@@ -1,11 +1,11 @@
 # Product Requirements Document (PRD)
 
 ## Product
-Penzu-style private diary web application built with PHP, SQLite, and Bootstrap.
+Journal-style private diary web application built with PHP, SQLite, and Bootstrap.
 
 ## Goals
 - Let users create private journals and write diary entries.
-- Provide a familiar UX inspired by Penzu: sign in screen, journal cards/dashboard, and split-pane editor.
+- Provide a familiar UX inspired by private journal apps: sign in screen, journal cards/dashboard, and split-pane editor.
 - Ship as a lightweight local-first app with no external backend dependency.
 
 ## Non-Goals
