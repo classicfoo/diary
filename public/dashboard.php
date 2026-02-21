@@ -20,7 +20,12 @@ require __DIR__ . '/../src/views/header.php';
         <form method="post" action="/logout.php" id="mobile-logout-form-dashboard" class="m-0">
             <?= csrf_input() ?>
         </form>
-        <button type="submit" class="mobile-icon-btn" form="mobile-logout-form-dashboard" title="Sign out">☰</button>
+        <div class="dropdown">
+            <button class="mobile-icon-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false" title="Menu">☰</button>
+            <ul class="dropdown-menu dropdown-menu-end">
+                <li><button type="button" class="dropdown-item text-danger" id="mobile-logout-menu-item">Log off</button></li>
+            </ul>
+        </div>
     </div>
 </div>
 
@@ -194,6 +199,8 @@ require __DIR__ . '/../src/views/header.php';
     const mobileNewJournalBtn = document.getElementById('mobile-new-journal-btn');
     const mobileNewJournalForm = document.getElementById('mobile-new-journal-form');
     const titleInput = mobileNewJournalForm ? mobileNewJournalForm.querySelector('input[name="title"]') : null;
+    const mobileLogoutItem = document.getElementById('mobile-logout-menu-item');
+    const mobileLogoutForm = document.getElementById('mobile-logout-form-dashboard');
 
     if (mobileNewJournalBtn && mobileNewJournalForm) {
         mobileNewJournalBtn.addEventListener('click', () => {
@@ -216,6 +223,12 @@ require __DIR__ . '/../src/views/header.php';
             }
 
             titleInput.value = title.trim();
+        });
+    }
+
+    if (mobileLogoutItem && mobileLogoutForm) {
+        mobileLogoutItem.addEventListener('click', () => {
+            mobileLogoutForm.submit();
         });
     }
 
