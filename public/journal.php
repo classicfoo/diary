@@ -172,8 +172,14 @@ require __DIR__ . '/../src/views/header.php';
 
     let timer = null;
     let saving = false;
-    let dirty = false;
     let pending = false;
+    const normalizeTitle = () => (titleEditable.textContent || '').replace(/\s+/g, ' ').trim();
+    const buildState = () => JSON.stringify({
+        title: normalizeTitle(),
+        entry_date: dateInput.value.trim(),
+        content: contentInput.value
+    });
+    let lastSavedState = buildState();
 
     const setStatus = (text, mode) => {
         statusEl.textContent = text;
@@ -182,7 +188,7 @@ require __DIR__ . '/../src/views/header.php';
     };
 
     const payload = () => {
-        const normalizedTitle = (titleEditable.textContent || '').replace(/\s+/g, ' ').trim();
+        const normalizedTitle = normalizeTitle();
         titleInput.value = normalizedTitle;
         const formData = new FormData(form);
         formData.set('title', normalizedTitle);
@@ -197,14 +203,19 @@ require __DIR__ . '/../src/views/header.php';
             return;
         }
 
-        const normalizedTitle = (titleEditable.textContent || '').replace(/\s+/g, ' ').trim();
+        const normalizedTitle = normalizeTitle();
         if (normalizedTitle === '' || dateInput.value.trim() === '') {
             setStatus('Title and date are required', 'autosave-error');
             return;
         }
 
+        const currentState = buildState();
+        if (currentState === lastSavedState) {
+            setStatus('Saved', 'autosave-saved');
+            return;
+        }
+
         saving = true;
-        dirty = false;
         setStatus('Saving...', 'autosave-saving');
 
         try {
@@ -221,6 +232,7 @@ require __DIR__ . '/../src/views/header.php';
 
             setStatus('Saved', 'autosave-saved');
             titleInput.value = normalizedTitle;
+            lastSavedState = buildState();
             if (activeTitle) activeTitle.textContent = normalizedTitle || 'Untitled';
             if (activeDate) {
                 const parsed = new Date(dateInput.value + 'T00:00:00');
@@ -230,7 +242,6 @@ require __DIR__ . '/../src/views/header.php';
                 activeDate.textContent = pretty;
             }
         } catch (error) {
-            dirty = true;
             setStatus(error.message || 'Autosave failed', 'autosave-error');
         } finally {
             saving = false;
@@ -242,7 +253,12 @@ require __DIR__ . '/../src/views/header.php';
     };
 
     const scheduleSave = () => {
-        dirty = true;
+        const currentState = buildState();
+        if (currentState === lastSavedState) {
+            setStatus('Saved', 'autosave-saved');
+            if (timer) clearTimeout(timer);
+            return;
+        }
         setStatus('Unsaved changes', 'autosave-idle');
         if (timer) clearTimeout(timer);
         timer = setTimeout(save, 800);
@@ -264,7 +280,7 @@ require __DIR__ . '/../src/views/header.php';
     });
 
     window.addEventListener('beforeunload', (event) => {
-        if (!dirty && !saving) return;
+        if (!saving && buildState() === lastSavedState) return;
         event.preventDefault();
         event.returnValue = '';
     });
