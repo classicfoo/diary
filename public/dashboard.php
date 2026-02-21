@@ -142,10 +142,30 @@ require __DIR__ . '/../src/views/header.php';
                             <button type="button" class="journal-color-swatch" data-color="#cc5a71" style="--swatch:#cc5a71" aria-label="Rose"></button>
                             <button type="button" class="journal-color-swatch" data-color="#2d6a4f" style="--swatch:#2d6a4f" aria-label="Forest"></button>
                             <button type="button" class="journal-color-swatch" data-color="#283044" style="--swatch:#283044" aria-label="Navy gray"></button>
-                        </div>
-                        <div class="d-flex align-items-center gap-2 mt-2">
-                            <label for="settings-bg-color-custom" class="small text-muted m-0">Custom</label>
-                            <input type="color" id="settings-bg-color-custom" class="form-control form-control-color" value="#2f79bb" title="Choose custom color">
+                            <button type="button" class="journal-color-swatch" data-color="#264653" style="--swatch:#264653" aria-label="Deep teal"></button>
+                            <button type="button" class="journal-color-swatch" data-color="#2a9d8f" style="--swatch:#2a9d8f" aria-label="Mint teal"></button>
+                            <button type="button" class="journal-color-swatch" data-color="#457b9d" style="--swatch:#457b9d" aria-label="Sky slate"></button>
+                            <button type="button" class="journal-color-swatch" data-color="#1d3557" style="--swatch:#1d3557" aria-label="Midnight blue"></button>
+                            <button type="button" class="journal-color-swatch" data-color="#4c6ef5" style="--swatch:#4c6ef5" aria-label="Royal blue"></button>
+                            <button type="button" class="journal-color-swatch" data-color="#3b5bdb" style="--swatch:#3b5bdb" aria-label="Cobalt"></button>
+                            <button type="button" class="journal-color-swatch" data-color="#5f3dc4" style="--swatch:#5f3dc4" aria-label="Deep violet"></button>
+                            <button type="button" class="journal-color-swatch" data-color="#7048e8" style="--swatch:#7048e8" aria-label="Violet"></button>
+                            <button type="button" class="journal-color-swatch" data-color="#7b2cbf" style="--swatch:#7b2cbf" aria-label="Plum"></button>
+                            <button type="button" class="journal-color-swatch" data-color="#9d4edd" style="--swatch:#9d4edd" aria-label="Purple"></button>
+                            <button type="button" class="journal-color-swatch" data-color="#b5179e" style="--swatch:#b5179e" aria-label="Magenta"></button>
+                            <button type="button" class="journal-color-swatch" data-color="#d6336c" style="--swatch:#d6336c" aria-label="Pink"></button>
+                            <button type="button" class="journal-color-swatch" data-color="#c2255c" style="--swatch:#c2255c" aria-label="Raspberry"></button>
+                            <button type="button" class="journal-color-swatch" data-color="#e76f51" style="--swatch:#e76f51" aria-label="Coral"></button>
+                            <button type="button" class="journal-color-swatch" data-color="#f4a261" style="--swatch:#f4a261" aria-label="Orange"></button>
+                            <button type="button" class="journal-color-swatch" data-color="#f77f00" style="--swatch:#f77f00" aria-label="Amber"></button>
+                            <button type="button" class="journal-color-swatch" data-color="#bc6c25" style="--swatch:#bc6c25" aria-label="Ochre"></button>
+                            <button type="button" class="journal-color-swatch" data-color="#8d5524" style="--swatch:#8d5524" aria-label="Umber"></button>
+                            <button type="button" class="journal-color-swatch" data-color="#606c38" style="--swatch:#606c38" aria-label="Olive"></button>
+                            <button type="button" class="journal-color-swatch" data-color="#588157" style="--swatch:#588157" aria-label="Sage"></button>
+                            <button type="button" class="journal-color-swatch" data-color="#2b9348" style="--swatch:#2b9348" aria-label="Green"></button>
+                            <button type="button" class="journal-color-swatch" data-color="#386641" style="--swatch:#386641" aria-label="Pine"></button>
+                            <button type="button" class="journal-color-swatch" data-color="#495057" style="--swatch:#495057" aria-label="Gray"></button>
+                            <button type="button" class="journal-color-swatch" data-color="#343a40" style="--swatch:#343a40" aria-label="Charcoal"></button>
                         </div>
                     </div>
 
@@ -230,7 +250,6 @@ require __DIR__ . '/../src/views/header.php';
     const deleteJournalId = document.getElementById('delete-journal-id');
 
     const settingsColorInput = document.getElementById('settings-bg-color');
-    const settingsColorCustom = document.getElementById('settings-bg-color-custom');
     const colorSwatches = Array.from(document.querySelectorAll('.journal-color-swatch'));
 
     const normalizeHex = (value) => {
@@ -241,7 +260,6 @@ require __DIR__ . '/../src/views/header.php';
     const selectColor = (value) => {
         const selected = normalizeHex(value);
         settingsColorInput.value = selected;
-        settingsColorCustom.value = selected;
         colorSwatches.forEach((swatch) => {
             const isActive = normalizeHex(swatch.dataset.color) === selected;
             swatch.classList.toggle('active', isActive);
@@ -254,12 +272,6 @@ require __DIR__ . '/../src/views/header.php';
             selectColor(swatch.dataset.color || '#2f79bb');
         });
     });
-
-    if (settingsColorCustom) {
-        settingsColorCustom.addEventListener('input', () => {
-            selectColor(settingsColorCustom.value);
-        });
-    }
 
     settingsModal.addEventListener('show.bs.modal', (event) => {
         const trigger = event.relatedTarget;
