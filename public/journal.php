@@ -59,7 +59,7 @@ require __DIR__ . '/../src/views/header.php';
             <button type="submit" form="mobile-create-entry-form" class="mobile-icon-btn" title="New entry">＋</button>
         <?php endif; ?>
         <div class="dropdown">
-            <button class="mobile-icon-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false" title="More">⋮</button>
+            <button class="mobile-icon-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false" title="Menu">☰</button>
             <ul class="dropdown-menu dropdown-menu-end">
                 <li><a class="dropdown-item" href="/dashboard.php">Journals</a></li>
                 <?php if ($isMobileEdit): ?>

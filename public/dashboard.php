@@ -20,7 +20,7 @@ require __DIR__ . '/../src/views/header.php';
         <form method="post" action="/logout.php" id="mobile-logout-form-dashboard" class="m-0">
             <?= csrf_input() ?>
         </form>
-        <button type="submit" class="mobile-icon-btn" form="mobile-logout-form-dashboard" title="Sign out">⋮</button>
+        <button type="submit" class="mobile-icon-btn" form="mobile-logout-form-dashboard" title="Sign out">☰</button>
     </div>
 </div>
 
@@ -33,10 +33,9 @@ require __DIR__ . '/../src/views/header.php';
     </form>
 </div>
 
-<form method="post" action="/journals_create.php" class="mobile-new-journal mobile-only" id="mobile-new-journal-form">
+<form method="post" action="/journals_create.php" class="d-none" id="mobile-new-journal-form">
     <?= csrf_input() ?>
-    <input type="text" name="title" class="form-control" placeholder="New journal" required>
-    <button class="btn btn-primary" type="submit">+ New Journal</button>
+    <input type="hidden" name="title" value="">
 </form>
 
 <form method="post" action="/journals_update.php" id="rename-journal-form" class="d-none">
@@ -65,7 +64,7 @@ require __DIR__ . '/../src/views/header.php';
                 <div class="card journal-card shadow-sm h-100" style="--journal-bg: <?= e((string) ($journal['bg_color'] ?? '#2f79bb')) ?>">
                     <div class="card-body d-flex flex-column">
                         <h2 class="h3 journal-title mb-3"><?= e((string) $journal['title']) ?></h2>
-                        <p class="text-white-50 small mb-3">Updated <?= e((string) $journal['updated_at']) ?></p>
+                        <p class="text-white-50 small mb-3">Updated <time data-utc-datetime="<?= e((string) $journal['updated_at']) ?>"><?= e((string) $journal['updated_at']) ?></time></p>
                         <div class="journal-actions mt-auto d-flex flex-wrap gap-2">
                             <a href="/journal.php?id=<?= (int) $journal['id'] ?>" class="btn btn-light border btn-sm">Open</a>
                             <button type="button" class="btn btn-light border btn-sm rename-journal-btn" data-journal-id="<?= (int) $journal['id'] ?>" data-journal-title="<?= e((string) $journal['title']) ?>">✎ Edit</button>
@@ -133,7 +132,21 @@ require __DIR__ . '/../src/views/header.php';
 
                     <div class="mb-3">
                         <label class="form-label">Background color</label>
-                        <input type="color" name="bg_color" id="settings-bg-color" class="form-control form-control-color" value="#2f79bb" title="Choose journal background color">
+                        <input type="hidden" name="bg_color" id="settings-bg-color" value="#2f79bb">
+                        <div class="journal-color-picker" id="journal-color-picker" role="group" aria-label="Journal background color">
+                            <button type="button" class="journal-color-swatch" data-color="#2f79bb" style="--swatch:#2f79bb" aria-label="Blue"></button>
+                            <button type="button" class="journal-color-swatch" data-color="#1f9d8f" style="--swatch:#1f9d8f" aria-label="Teal"></button>
+                            <button type="button" class="journal-color-swatch" data-color="#355c7d" style="--swatch:#355c7d" aria-label="Slate blue"></button>
+                            <button type="button" class="journal-color-swatch" data-color="#6c5ce7" style="--swatch:#6c5ce7" aria-label="Indigo"></button>
+                            <button type="button" class="journal-color-swatch" data-color="#7a4e2d" style="--swatch:#7a4e2d" aria-label="Brown"></button>
+                            <button type="button" class="journal-color-swatch" data-color="#cc5a71" style="--swatch:#cc5a71" aria-label="Rose"></button>
+                            <button type="button" class="journal-color-swatch" data-color="#2d6a4f" style="--swatch:#2d6a4f" aria-label="Forest"></button>
+                            <button type="button" class="journal-color-swatch" data-color="#283044" style="--swatch:#283044" aria-label="Navy gray"></button>
+                        </div>
+                        <div class="d-flex align-items-center gap-2 mt-2">
+                            <label for="settings-bg-color-custom" class="small text-muted m-0">Custom</label>
+                            <input type="color" id="settings-bg-color-custom" class="form-control form-control-color" value="#2f79bb" title="Choose custom color">
+                        </div>
                     </div>
 
                     <div>
@@ -164,7 +177,7 @@ require __DIR__ . '/../src/views/header.php';
 
     if (mobileNewJournalBtn && mobileNewJournalForm) {
         mobileNewJournalBtn.addEventListener('click', () => {
-            const title = window.prompt('Journal title:', "Michael's Journal");
+            const title = window.prompt('Journal title:', 'Untitled Journal');
             if (!title || title.trim() === '') return;
             titleInput.value = title.trim();
             mobileNewJournalForm.submit();
@@ -176,7 +189,7 @@ require __DIR__ . '/../src/views/header.php';
             const existing = titleInput.value.trim();
             if (existing !== '') return;
 
-            const title = window.prompt('Journal title:', "Michael's Journal");
+            const title = window.prompt('Journal title:', 'Untitled Journal');
             if (!title || title.trim() === '') {
                 event.preventDefault();
                 return;
@@ -216,6 +229,38 @@ require __DIR__ . '/../src/views/header.php';
     const deleteJournalForm = document.getElementById('delete-journal-form');
     const deleteJournalId = document.getElementById('delete-journal-id');
 
+    const settingsColorInput = document.getElementById('settings-bg-color');
+    const settingsColorCustom = document.getElementById('settings-bg-color-custom');
+    const colorSwatches = Array.from(document.querySelectorAll('.journal-color-swatch'));
+
+    const normalizeHex = (value) => {
+        const v = (value || '').trim();
+        return /^#[0-9a-fA-F]{6}$/.test(v) ? v.toLowerCase() : '#2f79bb';
+    };
+
+    const selectColor = (value) => {
+        const selected = normalizeHex(value);
+        settingsColorInput.value = selected;
+        settingsColorCustom.value = selected;
+        colorSwatches.forEach((swatch) => {
+            const isActive = normalizeHex(swatch.dataset.color) === selected;
+            swatch.classList.toggle('active', isActive);
+            swatch.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+        });
+    };
+
+    colorSwatches.forEach((swatch) => {
+        swatch.addEventListener('click', () => {
+            selectColor(swatch.dataset.color || '#2f79bb');
+        });
+    });
+
+    if (settingsColorCustom) {
+        settingsColorCustom.addEventListener('input', () => {
+            selectColor(settingsColorCustom.value);
+        });
+    }
+
     settingsModal.addEventListener('show.bs.modal', (event) => {
         const trigger = event.relatedTarget;
         if (!trigger) return;
@@ -227,7 +272,7 @@ require __DIR__ . '/../src/views/header.php';
 
         document.getElementById('settings-journal-id').value = id;
         document.getElementById('settings-journal-title').value = title;
-        document.getElementById('settings-bg-color').value = bgColor;
+        selectColor(bgColor);
         document.getElementById('settings-sort-order').value = sortOrder;
         deleteJournalId.value = id;
     });
