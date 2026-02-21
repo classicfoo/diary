@@ -5,6 +5,19 @@
     const toast = document.getElementById('app-toast');
     const toastWrap = document.getElementById('app-toast-wrap');
     if (toast && toastWrap) {
+        const updateToastOffset = () => {
+            const vv = window.visualViewport;
+            if (!vv) return;
+            const occludedBottom = Math.max(0, window.innerHeight - (vv.height + vv.offsetTop));
+            toastWrap.style.bottom = `${14 + occludedBottom}px`;
+        };
+
+        updateToastOffset();
+        if (window.visualViewport) {
+            window.visualViewport.addEventListener('resize', updateToastOffset);
+            window.visualViewport.addEventListener('scroll', updateToastOffset);
+        }
+
         requestAnimationFrame(() => {
             toast.classList.add('toast-show');
         });
@@ -15,6 +28,10 @@
         }, 1000);
 
         setTimeout(() => {
+            if (window.visualViewport) {
+                window.visualViewport.removeEventListener('resize', updateToastOffset);
+                window.visualViewport.removeEventListener('scroll', updateToastOffset);
+            }
             toastWrap.remove();
         }, 2050);
     }

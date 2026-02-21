@@ -24,7 +24,7 @@ body {
 
 .app-toast-wrap {
     position: fixed;
-    top: 0.85rem;
+    bottom: 0.85rem;
     right: 0.85rem;
     z-index: 2000;
     pointer-events: none;
