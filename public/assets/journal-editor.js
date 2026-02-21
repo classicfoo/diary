@@ -88,7 +88,9 @@
       normalizeTextareaValue();
       var text = textarea.value || '';
       var lines = text.replace(/\r\n?/g, '\n').split('\n');
-      code.innerHTML = lines.map(highlightLine).join('\n');
+      // Each line is a block element; avoid adding extra newline text nodes that
+      // can desync caret/line alignment after pressing Enter.
+      code.innerHTML = lines.map(highlightLine).join('');
       syncHeight();
     }
 

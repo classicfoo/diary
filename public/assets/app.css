@@ -363,6 +363,8 @@ body {
 
 .prism-editor .code-line {
     display: block;
+    white-space: pre-wrap;
+    word-break: break-word;
 }
 
 .prism-editor .code-line-task {
