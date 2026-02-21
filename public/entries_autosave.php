@@ -39,12 +39,6 @@ if (!$entry) {
     exit;
 }
 
-if ($title === '') {
-    http_response_code(422);
-    echo json_encode(['ok' => false, 'message' => 'Entry title is required']);
-    exit;
-}
-
 if ($entryDate === '' || !DateTimeImmutable::createFromFormat('Y-m-d', $entryDate)) {
     http_response_code(422);
     echo json_encode(['ok' => false, 'message' => 'Entry date is invalid']);

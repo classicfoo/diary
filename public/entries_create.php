@@ -19,7 +19,7 @@ if (!$journal) {
     redirect('/dashboard.php');
 }
 
-$title = 'Untitled';
+$title = '';
 $entryDate = now_date();
 $entryId = create_entry($db, $journalId, $title, '', $entryDate);
 

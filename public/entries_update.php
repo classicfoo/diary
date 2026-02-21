@@ -33,11 +33,6 @@ if (!$entry) {
     redirect('/journal.php?id=' . $journalId);
 }
 
-if ($title === '') {
-    flash('danger', 'Entry title is required.');
-    redirect('/journal.php?id=' . $journalId . '&entry=' . $entryId);
-}
-
 if ($entryDate === '' || !DateTimeImmutable::createFromFormat('Y-m-d', $entryDate)) {
     flash('danger', 'Entry date is invalid.');
     redirect('/journal.php?id=' . $journalId . '&entry=' . $entryId);

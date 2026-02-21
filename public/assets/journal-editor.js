@@ -11,14 +11,32 @@
   }
 
   function decodeHtmlEntities(value) {
-    var current = value;
-    for (var i = 0; i < 3; i++) {
-      var textarea = document.createElement('textarea');
-      textarea.innerHTML = current;
-      var decoded = textarea.value;
+    var current = value || '';
+
+    function decodeOnce(input) {
+      return input
+        .replace(/&#(\d+);/g, function (_, num) {
+          var code = parseInt(num, 10);
+          return Number.isFinite(code) ? String.fromCodePoint(code) : _;
+        })
+        .replace(/&#x([0-9a-fA-F]+);/g, function (_, hex) {
+          var code = parseInt(hex, 16);
+          return Number.isFinite(code) ? String.fromCodePoint(code) : _;
+        })
+        .replace(/&quot;/g, '"')
+        .replace(/&apos;/g, "'")
+        .replace(/&#039;/g, "'")
+        .replace(/&lt;/g, '<')
+        .replace(/&gt;/g, '>')
+        .replace(/&amp;/g, '&');
+    }
+
+    for (var i = 0; i < 4; i++) {
+      var decoded = decodeOnce(current);
       if (decoded === current) break;
       current = decoded;
     }
+
     return current;
   }
 

@@ -20,8 +20,17 @@ if (!$journal) {
 }
 
 $entries = list_entries($db, $journalId, (string) ($journal['sort_order'] ?? 'updated_desc'));
+foreach ($entries as &$entry) {
+    $entry['title'] = decode_legacy_entities((string) ($entry['title'] ?? ''));
+    $entry['content'] = decode_legacy_entities((string) ($entry['content'] ?? ''));
+}
+unset($entry);
 $activeEntryId = isset($_GET['entry']) ? (int) $_GET['entry'] : (isset($entries[0]['id']) ? (int) $entries[0]['id'] : 0);
 $activeEntry = $activeEntryId > 0 ? get_entry($db, $activeEntryId, $journalId) : null;
+if ($activeEntry) {
+    $activeEntry['title'] = decode_legacy_entities((string) ($activeEntry['title'] ?? ''));
+    $activeEntry['content'] = decode_legacy_entities((string) ($activeEntry['content'] ?? ''));
+}
 $mobileView = (string) ($_GET['view'] ?? 'list');
 $isMobileEdit = $mobileView === 'edit' && $activeEntry;
 
@@ -93,7 +102,7 @@ require __DIR__ . '/../src/views/header.php';
             <?php endif; ?>
             <?php foreach ($entries as $entry): ?>
                 <a class="entry-link <?= $activeEntry && (int) $activeEntry['id'] === (int) $entry['id'] ? 'active' : '' ?>" href="/journal.php?id=<?= (int) $journalId ?>&entry=<?= (int) $entry['id'] ?>&view=edit">
-                    <strong><?= e((string) $entry['title']) ?></strong>
+                    <strong><?= e((string) ($entry['title'] !== '' ? $entry['title'] : 'Untitled')) ?></strong>
                     <p><?= e(mb_substr((string) $entry['content'], 0, 90)) ?><?= mb_strlen((string) $entry['content']) > 90 ? '...' : '' ?></p>
                     <span><?= e(format_entry_date((string) $entry['entry_date'])) ?></span>
                 </a>
@@ -210,8 +219,8 @@ require __DIR__ . '/../src/views/header.php';
         }
 
         const normalizedTitle = normalizeTitle();
-        if (normalizedTitle === '' || dateInput.value.trim() === '') {
-            setStatus('Title and date are required', 'autosave-error');
+        if (dateInput.value.trim() === '') {
+            setStatus('Date is required', 'autosave-error');
             return;
         }
 
