@@ -6,8 +6,7 @@
       .replace(/&/g, '&amp;')
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#039;');
+      .replace(/"/g, '&quot;');
   }
 
   function decodeHtmlEntities(value) {
@@ -49,7 +48,7 @@
     else if (/^\s*(done|completed):/i.test(line)) className += ' code-line-done';
 
     var html = escapeHtml(line)
-      .replace(/(#[A-Za-z0-9_-]+)/g, '<span class="token-hashtag">$1</span>')
+      .replace(/(^|[^\\w&])(#[A-Za-z][A-Za-z0-9_-]*)/g, '$1<span class="token-hashtag">$2</span>')
       .replace(/\b(\d{1,2}\s(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\s\d{4})\b/gi, '<span class="token-date">$1</span>')
       .replace(/\b((?:https?:\/\/|www\.)[^\s<]+)/gi, '<span class="token-link">$1</span>');
 
