@@ -22,9 +22,52 @@ body {
     padding-bottom: 1.5rem;
 }
 
-.app-main {
-    padding-top: 1.5rem;
-    padding-bottom: 1.5rem;
+.app-toast-wrap {
+    position: fixed;
+    top: 0.85rem;
+    right: 0.85rem;
+    z-index: 2000;
+    pointer-events: none;
+}
+
+.app-toast {
+    min-width: 220px;
+    max-width: min(90vw, 360px);
+    border-radius: 10px;
+    padding: 0.7rem 0.95rem;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    color: #fff;
+    font-weight: 600;
+    opacity: 0;
+    transform: translateY(-8px);
+}
+
+.app-toast.toast-show {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.app-toast.toast-hide {
+    opacity: 0;
+    transform: translateY(-8px);
+    transition: opacity 1000ms ease, transform 1000ms ease;
+}
+
+.toast-success {
+    background: #198754;
+}
+
+.toast-danger {
+    background: #dc3545;
+}
+
+.toast-warning {
+    background: #b58100;
+}
+
+.toast-info {
+    background: #0d6efd;
 }
 
 .app-topbar {

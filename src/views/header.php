@@ -9,6 +9,16 @@
     <link href="/assets/app.css" rel="stylesheet">
 </head>
 <body class="<?= e($pageClass ?? '') ?>">
+<?php
+$flash = consume_flash();
+$flashTypeMap = [
+    'success' => 'toast-success',
+    'danger' => 'toast-danger',
+    'warning' => 'toast-warning',
+    'info' => 'toast-info',
+];
+$flashClass = $flash ? ($flashTypeMap[$flash['type']] ?? 'toast-info') : '';
+?>
 <?php if (is_authenticated()): ?>
 <nav class="navbar navbar-expand-lg app-topbar px-3 py-2">
     <div class="container-fluid">
@@ -28,10 +38,12 @@
 </nav>
 <?php endif; ?>
 
+<?php if ($flash): ?>
+<div class="app-toast-wrap" id="app-toast-wrap">
+    <div class="app-toast <?= e($flashClass) ?>" id="app-toast" role="status" aria-live="polite">
+        <?= e($flash['message']) ?>
+    </div>
+</div>
+<?php endif; ?>
+
 <main class="container app-main">
-    <?php $flash = consume_flash(); ?>
-    <?php if ($flash): ?>
-        <div class="alert alert-<?= e($flash['type']) ?>" role="alert">
-            <?= e($flash['message']) ?>
-        </div>
-    <?php endif; ?>
