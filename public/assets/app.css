@@ -121,6 +121,77 @@ body {
     font-family: Georgia, 'Times New Roman', serif;
 }
 
+.desktop-journal-book {
+    position: relative;
+    border-left: 20px solid rgba(36, 46, 59, 0.6);
+    border-radius: 8px;
+    padding: 1.1rem 1rem 0.95rem 1.1rem;
+}
+
+.desktop-journal-panel {
+    background: #eceff3;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 0.8rem;
+}
+
+.desktop-journal-panel .journal-title {
+    color: #4f5863;
+    text-align: center;
+    padding: 0.95rem 0.65rem;
+}
+
+.desktop-journal-actions {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid #d2dae4;
+}
+
+.desktop-journal-action {
+    border: 0;
+    border-right: 1px solid #d2dae4;
+    background: #f6f8fb;
+    color: #5f6976;
+    text-decoration: none;
+    text-align: center;
+    padding: 0.55rem 0.3rem;
+    font-size: 1.1rem;
+}
+
+.desktop-journal-action:last-child {
+    border-right: 0;
+}
+
+.desktop-journal-updated {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.85rem;
+}
+
+.journal-color-picker {
+    display: grid;
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    gap: 0.45rem;
+}
+
+.journal-color-swatch {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border: 2px solid #d2d8e0;
+    border-radius: 999px;
+    background: var(--swatch, #2f79bb);
+    cursor: pointer;
+    transition: transform 0.08s ease, box-shadow 0.12s ease;
+}
+
+.journal-color-swatch:hover {
+    transform: translateY(-1px);
+}
+
+.journal-color-swatch.active {
+    box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.25);
+    border-color: #0d6efd;
+}
+
 .journal-workspace {
     display: grid;
     grid-template-columns: 300px 1fr;
@@ -311,6 +382,10 @@ body {
 }
 
 @media (max-width: 991px) {
+    .desktop-journal-book {
+        border-left-width: 12px;
+    }
+
     .journal-workspace {
         grid-template-columns: 1fr;
     }
@@ -733,5 +808,18 @@ body {
 
     .mobile-mode-edit .journal-sidebar {
         display: none;
+    }
+}
+
+@media (min-width: 768px) {
+    .page-dashboard .app-topbar,
+    .page-journal .app-topbar {
+        background: #1e1f23;
+        border-bottom-color: rgba(255, 255, 255, 0.08);
+    }
+
+    .page-dashboard .app-topbar .btn-outline-light,
+    .page-journal .app-topbar .btn-outline-light {
+        border-color: rgba(255, 255, 255, 0.35);
     }
 }

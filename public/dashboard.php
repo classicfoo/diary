@@ -67,13 +67,31 @@ require __DIR__ . '/../src/views/header.php';
         <?php foreach ($journals as $journal): ?>
             <div class="col-12 col-md-6 col-lg-4">
                 <div class="card journal-card shadow-sm h-100" style="--journal-bg: <?= e((string) ($journal['bg_color'] ?? '#2f79bb')) ?>">
-                    <div class="card-body d-flex flex-column">
-                        <h2 class="h3 journal-title mb-3"><?= e((string) $journal['title']) ?></h2>
-                        <p class="text-white-50 small mb-3">Updated <time data-utc-datetime="<?= e((string) $journal['updated_at']) ?>"><?= e((string) $journal['updated_at']) ?></time></p>
-                        <div class="journal-actions mt-auto d-flex flex-wrap gap-2">
-                            <a href="/journal.php?id=<?= (int) $journal['id'] ?>" class="btn btn-light border btn-sm">Open</a>
-                            <button type="button" class="btn btn-light border btn-sm rename-journal-btn" data-journal-id="<?= (int) $journal['id'] ?>" data-journal-title="<?= e((string) $journal['title']) ?>">✎ Edit</button>
-                            <button type="button" class="btn btn-light border btn-sm lock-journal-btn" disabled title="Coming soon">🔒 Lock</button>
+                    <div class="card-body desktop-journal-book">
+                        <div class="desktop-journal-panel">
+                            <h2 class="h3 journal-title mb-0"><?= e((string) $journal['title']) ?></h2>
+                            <div class="desktop-journal-actions">
+                                <a href="/journal.php?id=<?= (int) $journal['id'] ?>" class="desktop-journal-action" title="Open">✎</a>
+                                <button type="button" class="desktop-journal-action lock-journal-btn" disabled title="Lock (coming soon)">🔒</button>
+                                <button type="button" class="desktop-journal-action rename-journal-btn" data-journal-id="<?= (int) $journal['id'] ?>" data-journal-title="<?= e((string) $journal['title']) ?>" title="Edit journal name">📝</button>
+                                <button
+                                    type="button"
+                                    class="desktop-journal-action settings-journal-btn"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#journalSettingsModal"
+                                    data-journal-id="<?= (int) $journal['id'] ?>"
+                                    data-journal-title="<?= e((string) $journal['title']) ?>"
+                                    data-journal-bg-color="<?= e((string) ($journal['bg_color'] ?? '#2f79bb')) ?>"
+                                    data-journal-sort-order="<?= e((string) ($journal['sort_order'] ?? 'updated_desc')) ?>"
+                                    title="Settings"
+                                >⚙</button>
+                            </div>
+                        </div>
+                        <p class="desktop-journal-updated mb-0">Updated <time data-utc-datetime="<?= e((string) $journal['updated_at']) ?>"><?= e((string) $journal['updated_at']) ?></time></p>
+                        <div class="journal-actions mt-3 d-flex flex-wrap gap-2">
+                            <a href="/journal.php?id=<?= (int) $journal['id'] ?>" class="btn btn-light border btn-sm">Open Journal</a>
+                            <button type="button" class="btn btn-light border btn-sm rename-journal-btn" data-journal-id="<?= (int) $journal['id'] ?>" data-journal-title="<?= e((string) $journal['title']) ?>">Rename</button>
+                            <button type="button" class="btn btn-light border btn-sm lock-journal-btn" disabled title="Coming soon">Lock</button>
                             <button
                                 type="button"
                                 class="btn btn-light border btn-sm settings-journal-btn"
@@ -83,7 +101,7 @@ require __DIR__ . '/../src/views/header.php';
                                 data-journal-title="<?= e((string) $journal['title']) ?>"
                                 data-journal-bg-color="<?= e((string) ($journal['bg_color'] ?? '#2f79bb')) ?>"
                                 data-journal-sort-order="<?= e((string) ($journal['sort_order'] ?? 'updated_desc')) ?>"
-                            >⚙ Settings</button>
+                            >Settings</button>
                         </div>
                     </div>
                 </div>
