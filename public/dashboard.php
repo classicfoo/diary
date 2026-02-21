@@ -23,6 +23,7 @@ require __DIR__ . '/../src/views/header.php';
         <div class="dropdown">
             <button class="mobile-icon-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false" title="Menu">☰</button>
             <ul class="dropdown-menu dropdown-menu-end">
+                <li><button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#appSettingsModal">App Settings</button></li>
                 <li><button type="button" class="dropdown-item text-danger" id="mobile-logout-menu-item">Log off</button></li>
             </ul>
         </div>
@@ -212,6 +213,38 @@ require __DIR__ . '/../src/views/header.php';
     </div>
 </div>
 
+<div class="modal fade" id="appSettingsModal" tabindex="-1" aria-labelledby="appSettingsLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <form method="post" action="/app_settings_update.php">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="appSettingsLabel">App Settings</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <?= csrf_input() ?>
+                    <label class="form-label">Navbar color</label>
+                    <input type="hidden" name="nav_color" id="app-nav-color-input" value="<?= e((string) ($user['nav_color'] ?? '#1e1f23')) ?>">
+                    <div class="journal-color-picker" role="group" aria-label="Navbar color">
+                        <button type="button" class="journal-color-swatch app-nav-swatch" data-color="#1e1f23" style="--swatch:#1e1f23" aria-label="Black"></button>
+                        <button type="button" class="journal-color-swatch app-nav-swatch" data-color="#2f79bb" style="--swatch:#2f79bb" aria-label="Blue"></button>
+                        <button type="button" class="journal-color-swatch app-nav-swatch" data-color="#1f9d8f" style="--swatch:#1f9d8f" aria-label="Teal"></button>
+                        <button type="button" class="journal-color-swatch app-nav-swatch" data-color="#5f3dc4" style="--swatch:#5f3dc4" aria-label="Purple"></button>
+                        <button type="button" class="journal-color-swatch app-nav-swatch" data-color="#cc5a71" style="--swatch:#cc5a71" aria-label="Rose"></button>
+                        <button type="button" class="journal-color-swatch app-nav-swatch" data-color="#2d6a4f" style="--swatch:#2d6a4f" aria-label="Forest"></button>
+                        <button type="button" class="journal-color-swatch app-nav-swatch" data-color="#bc6c25" style="--swatch:#bc6c25" aria-label="Brown"></button>
+                        <button type="button" class="journal-color-swatch app-nav-swatch" data-color="#343a40" style="--swatch:#343a40" aria-label="Dark gray"></button>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <script>
 (() => {
     const mobileNewJournalBtn = document.getElementById('mobile-new-journal-btn');
@@ -248,6 +281,33 @@ require __DIR__ . '/../src/views/header.php';
         mobileLogoutItem.addEventListener('click', () => {
             mobileLogoutForm.submit();
         });
+    }
+
+    const appNavColorInput = document.getElementById('app-nav-color-input');
+    const appNavSwatches = Array.from(document.querySelectorAll('.app-nav-swatch'));
+    if (appNavColorInput && appNavSwatches.length > 0) {
+        const normalizeHex = (value) => {
+            const v = (value || '').trim();
+            return /^#[0-9a-fA-F]{6}$/.test(v) ? v.toLowerCase() : '#1e1f23';
+        };
+
+        const selectNavColor = (value) => {
+            const next = normalizeHex(value);
+            appNavColorInput.value = next;
+            appNavSwatches.forEach((swatch) => {
+                const isActive = normalizeHex(swatch.dataset.color) === next;
+                swatch.classList.toggle('active', isActive);
+                swatch.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+            });
+        };
+
+        appNavSwatches.forEach((swatch) => {
+            swatch.addEventListener('click', () => {
+                selectNavColor(swatch.dataset.color || '#1e1f23');
+            });
+        });
+
+        selectNavColor(appNavColorInput.value);
     }
 
     const renameButtons = document.querySelectorAll('.rename-journal-btn');

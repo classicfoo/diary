@@ -13,11 +13,12 @@ function find_user_by_email(PDO $db, string $email): ?array
 
 function create_user(PDO $db, string $name, string $email, string $password): int
 {
-    $stmt = $db->prepare('INSERT INTO users (name, email, password_hash) VALUES (:name, :email, :password_hash)');
+    $stmt = $db->prepare('INSERT INTO users (name, email, password_hash, nav_color) VALUES (:name, :email, :password_hash, :nav_color)');
     $stmt->execute([
         'name' => trim($name),
         'email' => mb_strtolower(trim($email)),
         'password_hash' => password_hash($password, PASSWORD_DEFAULT),
+        'nav_color' => '#1e1f23',
     ]);
 
     return (int) $db->lastInsertId();
@@ -25,7 +26,7 @@ function create_user(PDO $db, string $name, string $email, string $password): in
 
 function get_user(PDO $db, int $userId): ?array
 {
-    $stmt = $db->prepare('SELECT id, name, email FROM users WHERE id = :id LIMIT 1');
+    $stmt = $db->prepare('SELECT id, name, email, nav_color FROM users WHERE id = :id LIMIT 1');
     $stmt->execute(['id' => $userId]);
     $user = $stmt->fetch();
 
@@ -180,5 +181,15 @@ function delete_journal(PDO $db, int $journalId, int $userId): void
     $stmt->execute([
         'id' => $journalId,
         'user_id' => $userId,
+    ]);
+}
+
+function update_user_nav_color(PDO $db, int $userId, string $navColor): void
+{
+    $safeColor = preg_match('/^#[0-9a-fA-F]{6}$/', $navColor) ? $navColor : '#1e1f23';
+    $stmt = $db->prepare('UPDATE users SET nav_color = :nav_color WHERE id = :id');
+    $stmt->execute([
+        'nav_color' => $safeColor,
+        'id' => $userId,
     ]);
 }

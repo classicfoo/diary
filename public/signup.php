@@ -46,6 +46,7 @@ if (is_post()) {
     $userId = create_user($db, $name, $email, $password);
     clear_old_input();
     login_user($userId);
+    $_SESSION['app_nav_color'] = '#1e1f23';
     flash('success', 'Your account is ready.');
     redirect('/dashboard.php');
 }

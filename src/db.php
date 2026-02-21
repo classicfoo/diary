@@ -25,6 +25,7 @@ function initialize_database(PDO $db): void
             name TEXT NOT NULL,
             email TEXT NOT NULL UNIQUE,
             password_hash TEXT NOT NULL,
+            nav_color TEXT NOT NULL DEFAULT "#1e1f23",
             created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
         )'
     );
@@ -56,6 +57,7 @@ function initialize_database(PDO $db): void
     );
 
     ensure_journals_columns($db);
+    ensure_users_columns($db);
 }
 
 function ensure_journals_columns(PDO $db): void
@@ -72,5 +74,18 @@ function ensure_journals_columns(PDO $db): void
 
     if (!in_array('sort_order', $names, true)) {
         $db->exec('ALTER TABLE journals ADD COLUMN sort_order TEXT NOT NULL DEFAULT "updated_desc"');
+    }
+}
+
+function ensure_users_columns(PDO $db): void
+{
+    $columns = $db->query('PRAGMA table_info(users)')->fetchAll();
+    $names = [];
+    foreach ($columns as $column) {
+        $names[] = (string) ($column['name'] ?? '');
+    }
+
+    if (!in_array('nav_color', $names, true)) {
+        $db->exec('ALTER TABLE users ADD COLUMN nav_color TEXT NOT NULL DEFAULT "#1e1f23"');
     }
 }

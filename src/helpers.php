@@ -68,6 +68,20 @@ function to_title_case(string $value): string
     return mb_convert_case($normalized, MB_CASE_TITLE, 'UTF-8');
 }
 
+function decode_legacy_entities(string $value): string
+{
+    $current = $value;
+    for ($i = 0; $i < 3; $i++) {
+        $decoded = html_entity_decode($current, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        if ($decoded === $current) {
+            break;
+        }
+        $current = $decoded;
+    }
+
+    return $current;
+}
+
 function format_entry_date(string $date): string
 {
     $parsed = DateTimeImmutable::createFromFormat('Y-m-d', $date);

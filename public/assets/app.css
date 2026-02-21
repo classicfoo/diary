@@ -246,11 +246,11 @@ body {
 }
 
 .entry-title-input {
-    min-height: 72px;
-    resize: vertical;
-    line-height: 1.2;
+    min-height: calc(1.5em + 1rem + 2px);
+    line-height: 1.5;
     white-space: pre-wrap;
     overflow-wrap: break-word;
+    padding: 0.5rem 0.75rem;
 }
 
 .prism-editor {

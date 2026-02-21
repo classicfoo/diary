@@ -11,7 +11,8 @@
 <body class="<?= e($pageClass ?? '') ?>">
 <?php
 $flash = consume_flash();
-$brandText = $brandText ?? 'penzu';
+$brandText = $brandText ?? 'Journal';
+$appNavColor = $_SESSION['app_nav_color'] ?? '#1e1f23';
 $flashTypeMap = [
     'success' => 'toast-success',
     'danger' => 'toast-danger',
@@ -21,9 +22,9 @@ $flashTypeMap = [
 $flashClass = $flash ? ($flashTypeMap[$flash['type']] ?? 'toast-info') : '';
 ?>
 <?php if (is_authenticated()): ?>
-<nav class="navbar navbar-expand-lg app-topbar px-3 py-2">
+<nav class="navbar navbar-expand-lg app-topbar px-3 py-2" style="background: <?= e((string) $appNavColor) ?>;">
     <div class="container-fluid">
-        <a class="navbar-brand app-logo" href="/dashboard.php">penzu</a>
+        <a class="navbar-brand app-logo" href="/dashboard.php"><?= e((string) $brandText) ?></a>
         <div class="ms-auto d-flex align-items-center gap-3">
             <a href="/dashboard.php" class="btn btn-light btn-sm fw-semibold">Dashboard</a>
             <form action="/logout.php" method="post" class="m-0">

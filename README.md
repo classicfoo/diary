@@ -1,6 +1,6 @@
-# Penzu Clone (PHP + SQLite)
+# Journal (PHP + SQLite)
 
-A lightweight diary app inspired by Penzu.
+A lightweight diary app inspired by Journal apps.
 
 ## Stack
 - PHP 8+

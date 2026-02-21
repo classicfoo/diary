@@ -11,9 +11,15 @@
   }
 
   function decodeHtmlEntities(value) {
-    var textarea = document.createElement('textarea');
-    textarea.innerHTML = value;
-    return textarea.value;
+    var current = value;
+    for (var i = 0; i < 3; i++) {
+      var textarea = document.createElement('textarea');
+      textarea.innerHTML = current;
+      var decoded = textarea.value;
+      if (decoded === current) break;
+      current = decoded;
+    }
+    return current;
   }
 
   function highlightLine(line) {

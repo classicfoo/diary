@@ -17,8 +17,8 @@ $title = trim((string) ($_POST['title'] ?? ''));
 $content = trim((string) ($_POST['content'] ?? ''));
 $entryDate = trim((string) ($_POST['entry_date'] ?? ''));
 
-$title = html_entity_decode($title, ENT_QUOTES | ENT_HTML5, 'UTF-8');
-$content = html_entity_decode($content, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+$title = decode_legacy_entities($title);
+$content = decode_legacy_entities($content);
 $title = to_title_case($title);
 
 $journal = get_journal($db, $journalId, $userId);

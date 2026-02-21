@@ -29,6 +29,7 @@ if (is_post()) {
 
     clear_old_input();
     login_user((int) $user['id']);
+    $_SESSION['app_nav_color'] = (string) ($user['nav_color'] ?? '#1e1f23');
     flash('success', 'Welcome back.');
     redirect('/dashboard.php');
 }
