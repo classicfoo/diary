@@ -52,7 +52,6 @@ require __DIR__ . '/../src/views/header.php';
         </form>
         <?php endif; ?>
         <?php if ($isMobileEdit): ?>
-            <a href="/journal.php?id=<?= (int) $journalId ?>" class="mobile-icon-btn" title="All entries">≣</a>
             <button type="submit" form="mobile-create-entry-form" class="mobile-icon-btn" title="New entry">＋</button>
         <?php else: ?>
             <button type="button" id="mobile-search-toggle" class="mobile-icon-btn" title="Search entries">⌕</button>
