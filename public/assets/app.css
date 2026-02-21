@@ -355,6 +355,10 @@ body {
     display: block;
     color: inherit;
     line-height: inherit;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: 400;
+    letter-spacing: normal;
 }
 
 .prism-editor .code-line {
@@ -374,7 +378,7 @@ body {
 }
 
 .prism-editor .code-line-heading {
-    font-weight: 700;
+    color: #1f2937;
 }
 
 .prism-editor .code-line-done {
@@ -383,12 +387,10 @@ body {
 
 .prism-editor .token-hashtag {
     color: #364fc7;
-    font-weight: 700;
 }
 
 .prism-editor .token-date {
     color: #0f766e;
-    font-weight: 600;
 }
 
 .prism-editor .token-link {
@@ -430,7 +432,7 @@ body {
 
 .editor-content {
     min-height: 420px;
-    resize: vertical;
+    resize: none;
 }
 
 @media (max-width: 991px) {

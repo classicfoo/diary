@@ -70,13 +70,24 @@
       textarea.style.height = Math.max(textarea.scrollHeight, 320) + 'px';
     }
 
-    function render() {
-      var text = textarea.value || '';
-      var decoded = decodeHtmlEntities(text);
-      if (decoded !== text) {
+    function normalizeTextareaValue() {
+      var start = textarea.selectionStart;
+      var end = textarea.selectionEnd;
+      var raw = textarea.value || '';
+      var decoded = decodeHtmlEntities(raw);
+      if (decoded !== raw) {
         textarea.value = decoded;
-        text = decoded;
+        try {
+          textarea.setSelectionRange(start, end);
+        } catch (e) {
+          // Ignore selection restore failures on unsupported inputs.
+        }
       }
+    }
+
+    function render() {
+      normalizeTextareaValue();
+      var text = textarea.value || '';
       var lines = text.replace(/\r\n?/g, '\n').split('\n');
       code.innerHTML = lines.map(highlightLine).join('\n');
       syncHeight();
