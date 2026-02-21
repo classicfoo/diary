@@ -10,6 +10,12 @@
       .replace(/'/g, '&#039;');
   }
 
+  function decodeHtmlEntities(value) {
+    var textarea = document.createElement('textarea');
+    textarea.innerHTML = value;
+    return textarea.value;
+  }
+
   function highlightLine(line) {
     var className = 'code-line';
     if (/^\s*[-*]\s\[[ xX]\]/.test(line)) className += ' code-line-task';
@@ -42,6 +48,11 @@
 
     function render() {
       var text = textarea.value || '';
+      var decoded = decodeHtmlEntities(text);
+      if (decoded !== text) {
+        textarea.value = decoded;
+        text = decoded;
+      }
       var lines = text.replace(/\r\n?/g, '\n').split('\n');
       code.innerHTML = lines.map(highlightLine).join('\n');
       syncHeight();
