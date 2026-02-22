@@ -105,7 +105,7 @@ require __DIR__ . '/../src/views/header.php';
                 <a class="entry-link <?= $activeEntry && (int) $activeEntry['id'] === (int) $entry['id'] ? 'active' : '' ?>" href="/journal.php?id=<?= (int) $journalId ?>&entry=<?= (int) $entry['id'] ?>&view=edit">
                     <strong><?= e((string) ($entry['title'] !== '' ? $entry['title'] : 'Untitled')) ?></strong>
                     <p><?= e(mb_substr((string) $entry['content'], 0, 90)) ?><?= mb_strlen((string) $entry['content']) > 90 ? '...' : '' ?></p>
-                    <span><?= e(format_entry_date((string) $entry['entry_date'])) ?></span>
+                    <span data-local-date="<?= e((string) $entry['entry_date']) ?>"><?= e(format_entry_date((string) $entry['entry_date'])) ?></span>
                 </a>
             <?php endforeach; ?>
         </div>
@@ -122,7 +122,7 @@ require __DIR__ . '/../src/views/header.php';
         <?php else: ?>
             <div class="card shadow-sm">
                 <div class="card-body">
-                    <div class="mobile-date-strip mobile-only"><?= e(format_entry_date((string) $activeEntry['entry_date'])) ?></div>
+                    <div class="mobile-date-strip mobile-only" id="mobile-active-entry-date" data-local-date="<?= e((string) $activeEntry['entry_date']) ?>"><?= e(format_entry_date((string) $activeEntry['entry_date'])) ?></div>
                     <form method="post" action="/entries_autosave.php" class="vstack gap-3" id="autosave-form">
                         <?= csrf_input() ?>
                         <input type="hidden" name="journal_id" value="<?= (int) $journalId ?>">
@@ -183,6 +183,7 @@ require __DIR__ . '/../src/views/header.php';
     const activeLink = document.querySelector('.entry-link.active');
     const activeTitle = activeLink ? activeLink.querySelector('strong') : null;
     const activeDate = activeLink ? activeLink.querySelector('span') : null;
+    const mobileActiveDate = document.getElementById('mobile-active-entry-date');
     const endpoint = form.getAttribute('action');
     const editorEl = document.getElementById('entry-editor');
 
@@ -257,12 +258,16 @@ require __DIR__ . '/../src/views/header.php';
             titleEditable.textContent = normalizedTitle;
             lastSavedState = buildState();
             if (activeTitle) activeTitle.textContent = normalizedTitle || 'Untitled';
+            const pretty = typeof window.diaryFormatLocalDate === 'function'
+                ? window.diaryFormatLocalDate(dateInput.value)
+                : dateInput.value;
             if (activeDate) {
-                const parsed = new Date(dateInput.value + 'T00:00:00');
-                const pretty = Number.isNaN(parsed.getTime())
-                    ? dateInput.value
-                    : parsed.toLocaleDateString(undefined, { day: 'numeric', month: 'long', year: 'numeric' });
                 activeDate.textContent = pretty;
+                activeDate.setAttribute('data-local-date', dateInput.value);
+            }
+            if (mobileActiveDate) {
+                mobileActiveDate.textContent = pretty;
+                mobileActiveDate.setAttribute('data-local-date', dateInput.value);
             }
         } catch (error) {
             setStatus(error.message || 'Autosave failed', 'autosave-error');

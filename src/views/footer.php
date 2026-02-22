@@ -50,9 +50,40 @@
         });
     };
 
+    const formatLocalDate = (value) => {
+        if (!value) return '';
+        const match = String(value).match(/^(\d{4})-(\d{2})-(\d{2})$/);
+        if (!match) return String(value);
+        const year = Number(match[1]);
+        const month = Number(match[2]);
+        const day = Number(match[3]);
+        const date = new Date(year, month - 1, day);
+        if (
+            Number.isNaN(date.getTime()) ||
+            date.getFullYear() !== year ||
+            date.getMonth() !== (month - 1) ||
+            date.getDate() !== day
+        ) {
+            return String(value);
+        }
+
+        return date.toLocaleDateString(undefined, {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+    };
+    window.diaryFormatLocalDate = formatLocalDate;
+
     document.querySelectorAll('[data-utc-datetime]').forEach((el) => {
         const raw = el.getAttribute('data-utc-datetime');
         const next = formatUtc(raw);
+        if (next) el.textContent = next;
+    });
+
+    document.querySelectorAll('[data-local-date]').forEach((el) => {
+        const raw = el.getAttribute('data-local-date');
+        const next = formatLocalDate(raw);
         if (next) el.textContent = next;
     });
 
