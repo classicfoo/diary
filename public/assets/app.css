@@ -263,6 +263,7 @@ body {
     grid-template-columns: 300px 1fr;
     gap: 1rem;
     min-height: 72vh;
+    --journal-accent: #2d84c7;
 }
 
 .journal-sidebar {
@@ -302,8 +303,26 @@ body {
 
 .entry-link:hover,
 .entry-link.active {
-    background: #2d84c7;
+    background: var(--journal-accent);
+    background: color-mix(in srgb, var(--journal-accent) 76%, #253443);
     color: #fff;
+}
+
+.journal-sidebar .btn-primary,
+.mobile-new-entry-btn {
+    background: var(--journal-accent);
+    border-color: var(--journal-accent);
+    border-color: color-mix(in srgb, var(--journal-accent) 72%, #15202c);
+}
+
+.journal-sidebar .btn-primary:hover,
+.journal-sidebar .btn-primary:focus,
+.mobile-new-entry-btn:hover,
+.mobile-new-entry-btn:focus {
+    background: var(--journal-accent);
+    border-color: var(--journal-accent);
+    background: color-mix(in srgb, var(--journal-accent) 84%, #0f1722);
+    border-color: color-mix(in srgb, var(--journal-accent) 70%, #0c141d);
 }
 
 .editor-pane .card {

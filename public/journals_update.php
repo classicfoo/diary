@@ -39,9 +39,10 @@ if ($action === 'rename') {
 
 if ($action === 'settings') {
     $bgColor = (string) ($_POST['bg_color'] ?? '#2f79bb');
+    $accentColor = (string) ($_POST['accent_color'] ?? '#2d84c7');
     $sortOrder = (string) ($_POST['sort_order'] ?? 'updated_desc');
 
-    update_journal_settings($db, $journalId, $userId, $bgColor, $sortOrder);
+    update_journal_settings($db, $journalId, $userId, $bgColor, $accentColor, $sortOrder);
     flash('success', 'Journal settings updated.');
     redirect('/dashboard.php');
 }

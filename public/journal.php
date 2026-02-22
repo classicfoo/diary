@@ -37,6 +37,10 @@ $isMobileEdit = $mobileView === 'edit' && $activeEntry;
 $pageTitle = (string) $journal['title'];
 $pageClass = 'page-journal';
 $appNavColor = (string) ($journal['bg_color'] ?? '#1e1f23');
+$journalAccentColor = (string) ($journal['accent_color'] ?? '#2d84c7');
+if (!preg_match('/^#[0-9a-fA-F]{6}$/', $journalAccentColor)) {
+    $journalAccentColor = '#2d84c7';
+}
 require __DIR__ . '/../src/views/header.php';
 ?>
 <div class="mobile-page-header mobile-only">
@@ -85,7 +89,7 @@ require __DIR__ . '/../src/views/header.php';
     </div>
 </div>
 
-<div class="journal-workspace <?= $isMobileEdit ? 'mobile-mode-edit' : 'mobile-mode-list' ?>">
+<div class="journal-workspace <?= $isMobileEdit ? 'mobile-mode-edit' : 'mobile-mode-list' ?>" style="--journal-accent: <?= e($journalAccentColor) ?>;">
     <aside class="journal-sidebar">
         <div class="sidebar-head">
             <h2 class="h5 mb-0"><?= e((string) $journal['title']) ?></h2>

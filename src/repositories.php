@@ -43,11 +43,12 @@ function list_journals(PDO $db, int $userId): array
 
 function create_journal(PDO $db, int $userId, string $title): int
 {
-    $stmt = $db->prepare('INSERT INTO journals (user_id, title, bg_color, sort_order) VALUES (:user_id, :title, :bg_color, :sort_order)');
+    $stmt = $db->prepare('INSERT INTO journals (user_id, title, bg_color, accent_color, sort_order) VALUES (:user_id, :title, :bg_color, :accent_color, :sort_order)');
     $stmt->execute([
         'user_id' => $userId,
         'title' => trim($title),
         'bg_color' => '#2f79bb',
+        'accent_color' => '#2d84c7',
         'sort_order' => 'updated_desc',
     ]);
 
@@ -154,21 +155,24 @@ function update_journal_title(PDO $db, int $journalId, int $userId, string $titl
     ]);
 }
 
-function update_journal_settings(PDO $db, int $journalId, int $userId, string $bgColor, string $sortOrder): void
+function update_journal_settings(PDO $db, int $journalId, int $userId, string $bgColor, string $accentColor, string $sortOrder): void
 {
     $allowedSort = ['created_desc', 'created_asc', 'updated_desc', 'updated_asc'];
     $safeSort = in_array($sortOrder, $allowedSort, true) ? $sortOrder : 'updated_desc';
     $safeColor = preg_match('/^#[0-9a-fA-F]{6}$/', $bgColor) ? $bgColor : '#2f79bb';
+    $safeAccentColor = preg_match('/^#[0-9a-fA-F]{6}$/', $accentColor) ? $accentColor : '#2d84c7';
 
     $stmt = $db->prepare(
         'UPDATE journals
          SET bg_color = :bg_color,
+             accent_color = :accent_color,
              sort_order = :sort_order,
              updated_at = CURRENT_TIMESTAMP
          WHERE id = :id AND user_id = :user_id'
     );
     $stmt->execute([
         'bg_color' => $safeColor,
+        'accent_color' => $safeAccentColor,
         'sort_order' => $safeSort,
         'id' => $journalId,
         'user_id' => $userId,

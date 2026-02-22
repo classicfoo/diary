@@ -84,6 +84,7 @@ require __DIR__ . '/../src/views/header.php';
                                     data-journal-id="<?= (int) $journal['id'] ?>"
                                     data-journal-title="<?= e((string) $journal['title']) ?>"
                                     data-journal-bg-color="<?= e((string) ($journal['bg_color'] ?? '#2f79bb')) ?>"
+                                    data-journal-accent-color="<?= e((string) ($journal['accent_color'] ?? '#2d84c7')) ?>"
                                     data-journal-sort-order="<?= e((string) ($journal['sort_order'] ?? 'updated_desc')) ?>"
                                     title="Settings"
                                 >⚙</button>
@@ -112,6 +113,7 @@ require __DIR__ . '/../src/views/header.php';
                             data-journal-id="<?= (int) $journal['id'] ?>"
                             data-journal-title="<?= e((string) $journal['title']) ?>"
                             data-journal-bg-color="<?= e((string) ($journal['bg_color'] ?? '#2f79bb')) ?>"
+                            data-journal-accent-color="<?= e((string) ($journal['accent_color'] ?? '#2d84c7')) ?>"
                             data-journal-sort-order="<?= e((string) ($journal['sort_order'] ?? 'updated_desc')) ?>"
                             aria-label="Journal settings"
                         >⚙</button>
@@ -144,6 +146,12 @@ require __DIR__ . '/../src/views/header.php';
                         <label class="form-label">Background color</label>
                         <input type="hidden" name="bg_color" id="settings-bg-color" value="#2f79bb">
                         <div class="hsv-picker" data-hsv-input="settings-bg-color"></div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Accent color</label>
+                        <input type="hidden" name="accent_color" id="settings-accent-color" value="#2d84c7">
+                        <div class="hsv-picker" data-hsv-input="settings-accent-color"></div>
                     </div>
 
                     <div>
@@ -246,11 +254,13 @@ require __DIR__ . '/../src/views/header.php';
         const id = trigger.dataset.journalId || '';
         const title = trigger.dataset.journalTitle || '';
         const bgColor = trigger.dataset.journalBgColor || '#2f79bb';
+        const accentColor = trigger.dataset.journalAccentColor || '#2d84c7';
         const sortOrder = trigger.dataset.journalSortOrder || 'updated_desc';
 
         document.getElementById('settings-journal-id').value = id;
         document.getElementById('settings-journal-title').value = title;
         document.getElementById('settings-bg-color').value = bgColor;
+        document.getElementById('settings-accent-color').value = accentColor;
         if (window.initHsvColorPickers) {
             window.initHsvColorPickers(settingsModal);
         }
