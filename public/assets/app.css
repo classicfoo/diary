@@ -708,14 +708,18 @@ body {
         padding: 0.8rem 1rem !important;
     }
 
-    .entry-search-wrap {
-        display: none;
-        padding: 0 1rem 0.35rem;
-    }
+.entry-search-wrap {
+    display: none;
+    padding: 0 1rem 0.35rem;
+}
 
-    .entry-search-wrap.open {
-        display: block;
-    }
+.entry-search-wrap .form-control {
+    border-radius: 0;
+}
+
+.entry-search-wrap.open {
+    display: block;
+}
 
     .entry-search-wrap .form-control {
         border: 1px solid #c4cbd7;
