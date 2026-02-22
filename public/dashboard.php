@@ -16,7 +16,6 @@ require __DIR__ . '/../src/views/header.php';
 <div class="mobile-page-header mobile-only">
     <h1>Journals</h1>
     <div class="mobile-icons">
-        <span class="pill">PRO</span>
         <button type="button" class="mobile-icon-btn" id="mobile-new-journal-btn" title="New journal">＋</button>
         <form method="post" action="/logout.php" id="mobile-logout-form-dashboard" class="m-0">
             <?= csrf_input() ?>
