@@ -70,7 +70,9 @@ require __DIR__ . '/../src/views/header.php';
                 <div class="card journal-card shadow-sm h-100" style="--journal-bg: <?= e((string) ($journal['bg_color'] ?? '#2f79bb')) ?>">
                     <div class="card-body desktop-journal-book">
                         <div class="desktop-journal-panel">
-                            <h2 class="h3 journal-title mb-0"><?= e((string) $journal['title']) ?></h2>
+                            <h2 class="h3 journal-title mb-0">
+                                <a href="/journal.php?id=<?= (int) $journal['id'] ?>" class="desktop-journal-title-link"><?= e((string) $journal['title']) ?></a>
+                            </h2>
                             <div class="desktop-journal-actions">
                                 <a href="/journal.php?id=<?= (int) $journal['id'] ?>" class="desktop-journal-action" title="Open">✎</a>
                                 <button type="button" class="desktop-journal-action lock-journal-btn" disabled title="Lock (coming soon)">🔒</button>
