@@ -21,6 +21,7 @@ $flashTypeMap = [
 ];
 $flashClass = $flash ? ($flashTypeMap[$flash['type']] ?? 'toast-info') : '';
 $isDashboardPage = ($pageClass ?? '') === 'page-dashboard';
+$isJournalPage = ($pageClass ?? '') === 'page-journal';
 ?>
 <body class="<?= e($pageClass ?? '') ?>"<?= is_authenticated() ? ' style="--app-nav-color: ' . e($safeNavColor) . ';"' : '' ?>>
 <?php if (is_authenticated()): ?>
@@ -37,6 +38,16 @@ $isDashboardPage = ($pageClass ?? '') === 'page-dashboard';
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li><button type="button" class="dropdown-item" id="desktop-new-journal-menu-item">New Journal</button></li>
                         <li><button type="submit" form="desktop-dashboard-logout-form" class="dropdown-item text-danger">Sign out</button></li>
+                    </ul>
+                </div>
+            <?php elseif ($isJournalPage): ?>
+                <form action="/logout.php" method="post" class="m-0 d-none" id="desktop-journal-logout-form">
+                    <?= csrf_input() ?>
+                </form>
+                <div class="dropdown">
+                    <button class="btn btn-outline-light btn-sm fw-semibold" type="button" data-bs-toggle="dropdown" aria-expanded="false" title="Menu">☰</button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><button type="submit" form="desktop-journal-logout-form" class="dropdown-item text-danger">Sign out</button></li>
                     </ul>
                 </div>
             <?php else: ?>
