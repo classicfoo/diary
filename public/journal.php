@@ -343,7 +343,9 @@ require __DIR__ . '/../src/views/header.php';
         searchInput.addEventListener('input', () => {
             const query = searchInput.value.trim().toLowerCase();
             entryLinks.forEach((link) => {
-                const text = link.textContent.toLowerCase();
+                const titleEl = link.querySelector('strong');
+                const dateEl = link.querySelector('span');
+                const text = `${titleEl ? titleEl.textContent : ''} ${dateEl ? dateEl.textContent : ''}`.toLowerCase();
                 link.style.display = text.includes(query) ? '' : 'none';
             });
         });
