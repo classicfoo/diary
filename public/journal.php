@@ -128,7 +128,15 @@ require __DIR__ . '/../src/views/header.php';
                         <input type="hidden" name="entry_id" value="<?= (int) $activeEntry['id'] ?>">
                         <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 editor-title-row">
                             <h3 class="h4 m-0">Edit Entry</h3>
-                            <span id="autosave-status" class="autosave-status autosave-idle">Autosave ready</span>
+                            <div class="d-flex align-items-center gap-2">
+                                <span id="autosave-status" class="autosave-status autosave-idle">Autosave ready</span>
+                                <div class="dropdown">
+                                    <button class="btn btn-light btn-sm border" type="button" data-bs-toggle="dropdown" aria-expanded="false" title="Entry actions">⋮</button>
+                                    <ul class="dropdown-menu dropdown-menu-end">
+                                        <li><button class="dropdown-item text-danger" type="submit" form="desktop-delete-entry-form" onclick="return confirm('Delete this entry?');">Delete Entry</button></li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                         <div class="row g-3">
                             <div class="col-12 col-md-8">
@@ -149,12 +157,10 @@ require __DIR__ . '/../src/views/header.php';
                             </div>
                         </div>
                     </form>
-                    <hr class="desktop-delete">
-                    <form method="post" action="/entries_delete.php" class="desktop-delete" onsubmit="return confirm('Delete this entry?');">
+                    <form method="post" action="/entries_delete.php" id="desktop-delete-entry-form" class="d-none">
                         <?= csrf_input() ?>
                         <input type="hidden" name="journal_id" value="<?= (int) $journalId ?>">
                         <input type="hidden" name="entry_id" value="<?= (int) $activeEntry['id'] ?>">
-                        <button class="btn btn-outline-danger" type="submit">Delete Entry</button>
                     </form>
                 </div>
             </div>
