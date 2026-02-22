@@ -337,7 +337,9 @@ require __DIR__ . '/../src/views/header.php';
                 searchInput.focus();
             }
         });
+    }
 
+    if (searchInput) {
         searchInput.addEventListener('input', () => {
             const query = searchInput.value.trim().toLowerCase();
             entryLinks.forEach((link) => {
