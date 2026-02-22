@@ -301,7 +301,10 @@ body {
     display: none;
 }
 
-.entry-link:hover,
+.entry-link:hover {
+    color: #fff;
+}
+
 .entry-link.active {
     background: var(--journal-accent);
     background: color-mix(in srgb, var(--journal-accent) 76%, #253443);
