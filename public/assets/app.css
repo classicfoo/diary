@@ -283,6 +283,10 @@ body {
     overflow-y: auto;
 }
 
+.journal-sidebar #entry-search {
+    border-radius: 0;
+}
+
 .entry-link {
     display: block;
     padding: 0.75rem 1rem;
