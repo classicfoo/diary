@@ -91,21 +91,6 @@ require __DIR__ . '/../src/views/header.php';
                             </div>
                         </div>
                         <p class="desktop-journal-updated mb-0">Updated <time data-utc-datetime="<?= e((string) $journal['updated_at']) ?>"><?= e((string) $journal['updated_at']) ?></time></p>
-                        <div class="journal-actions mt-3 d-flex flex-wrap gap-2">
-                            <a href="/journal.php?id=<?= (int) $journal['id'] ?>" class="btn btn-light border btn-sm">Open Journal</a>
-                            <button type="button" class="btn btn-light border btn-sm rename-journal-btn" data-journal-id="<?= (int) $journal['id'] ?>" data-journal-title="<?= e((string) $journal['title']) ?>">Rename</button>
-                            <button type="button" class="btn btn-light border btn-sm lock-journal-btn" disabled title="Coming soon">Lock</button>
-                            <button
-                                type="button"
-                                class="btn btn-light border btn-sm settings-journal-btn"
-                                data-bs-toggle="modal"
-                                data-bs-target="#journalSettingsModal"
-                                data-journal-id="<?= (int) $journal['id'] ?>"
-                                data-journal-title="<?= e((string) $journal['title']) ?>"
-                                data-journal-bg-color="<?= e((string) ($journal['bg_color'] ?? '#2f79bb')) ?>"
-                                data-journal-sort-order="<?= e((string) ($journal['sort_order'] ?? 'updated_desc')) ?>"
-                            >Settings</button>
-                        </div>
                     </div>
                 </div>
             </div>
