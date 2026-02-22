@@ -152,7 +152,7 @@ body {
 .desktop-journal-title-link:hover,
 .desktop-journal-title-link:focus {
     color: #2f3c4b;
-    text-decoration: underline;
+    text-decoration: none;
 }
 
 .desktop-journal-actions {
