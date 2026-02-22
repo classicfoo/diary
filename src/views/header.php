@@ -11,7 +11,7 @@
 <?php
 $flash = consume_flash();
 $brandText = $brandText ?? 'Journal';
-$appNavColor = $_SESSION['app_nav_color'] ?? '#1e1f23';
+$appNavColor = $appNavColor ?? ($_SESSION['app_nav_color'] ?? '#1e1f23');
 $safeNavColor = preg_match('/^#[0-9a-fA-F]{6}$/', (string) $appNavColor) ? (string) $appNavColor : '#1e1f23';
 $flashTypeMap = [
     'success' => 'toast-success',

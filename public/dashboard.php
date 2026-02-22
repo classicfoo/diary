@@ -10,6 +10,7 @@ $journals = list_journals($db, (int) $user['id']);
 
 $pageTitle = 'Dashboard';
 $pageClass = 'page-dashboard';
+$appNavColor = (string) ($journals[0]['bg_color'] ?? '#1e1f23');
 require __DIR__ . '/../src/views/header.php';
 ?>
 <div class="mobile-page-header mobile-only">
@@ -23,7 +24,6 @@ require __DIR__ . '/../src/views/header.php';
         <div class="dropdown">
             <button class="mobile-icon-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false" title="Menu">☰</button>
             <ul class="dropdown-menu dropdown-menu-end">
-                <li><button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#appSettingsModal">App Settings</button></li>
                 <li><button type="button" class="dropdown-item text-danger" id="mobile-logout-menu-item">Log off</button></li>
             </ul>
         </div>
@@ -180,29 +180,6 @@ require __DIR__ . '/../src/views/header.php';
     </div>
 </div>
 
-<div class="modal fade" id="appSettingsModal" tabindex="-1" aria-labelledby="appSettingsLabel" aria-hidden="true">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <form method="post" action="/app_settings_update.php">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="appSettingsLabel">App Settings</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <?= csrf_input() ?>
-                    <label class="form-label">Navbar color</label>
-                    <input type="hidden" name="nav_color" id="app-nav-color-input" value="<?= e((string) ($user['nav_color'] ?? '#1e1f23')) ?>">
-                    <div class="hsv-picker" data-hsv-input="app-nav-color-input"></div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Save</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
 <script src="/assets/hsv-color-picker.js"></script>
 <script>
 (() => {
@@ -302,14 +279,6 @@ require __DIR__ . '/../src/views/header.php';
         });
     }
 
-    const appSettingsModal = document.getElementById('appSettingsModal');
-    if (appSettingsModal) {
-        appSettingsModal.addEventListener('show.bs.modal', () => {
-            if (window.initHsvColorPickers) {
-                window.initHsvColorPickers(appSettingsModal);
-            }
-        });
-    }
 })();
 </script>
 <?php require __DIR__ . '/../src/views/footer.php'; ?>

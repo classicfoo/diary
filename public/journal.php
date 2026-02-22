@@ -36,6 +36,7 @@ $isMobileEdit = $mobileView === 'edit' && $activeEntry;
 
 $pageTitle = (string) $journal['title'];
 $pageClass = 'page-journal';
+$appNavColor = (string) ($journal['bg_color'] ?? '#1e1f23');
 require __DIR__ . '/../src/views/header.php';
 ?>
 <div class="mobile-page-header mobile-only">
