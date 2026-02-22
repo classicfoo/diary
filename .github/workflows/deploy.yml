@@ -3,7 +3,7 @@ name: Deploy to InfinityFree (FTP)
 on:
   push:
     branches:
-      - main
+      - feature/navbar-follows-journal-color
   workflow_dispatch:
 
 jobs:
