@@ -50,6 +50,7 @@ require __DIR__ . '/../src/views/header.php';
         <form method="post" action="/entries_create.php" id="mobile-create-entry-form">
             <?= csrf_input() ?>
             <input type="hidden" name="journal_id" value="<?= (int) $journalId ?>">
+            <input type="hidden" name="entry_date" value="" data-fill-local-date="true">
         </form>
         <form method="post" action="/logout.php" id="mobile-logout-form">
             <?= csrf_input() ?>
@@ -92,6 +93,7 @@ require __DIR__ . '/../src/views/header.php';
         <form method="post" action="/entries_create.php" class="p-3 border-bottom">
             <?= csrf_input() ?>
             <input type="hidden" name="journal_id" value="<?= (int) $journalId ?>">
+            <input type="hidden" name="entry_date" value="" data-fill-local-date="true">
             <button class="btn btn-primary w-100 mobile-new-entry-btn" type="submit">New Entry</button>
         </form>
         <div class="entry-search-wrap" id="entry-search-wrap">

@@ -20,7 +20,10 @@ if (!$journal) {
 }
 
 $title = '';
-$entryDate = now_date();
+$entryDate = trim((string) ($_POST['entry_date'] ?? ''));
+if ($entryDate === '' || !DateTimeImmutable::createFromFormat('Y-m-d', $entryDate)) {
+    $entryDate = now_date();
+}
 $entryId = create_entry($db, $journalId, $title, '', $entryDate);
 
 flash('success', 'Entry created.');
