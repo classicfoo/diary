@@ -264,9 +264,6 @@ body {
     gap: 1rem;
     min-height: 72vh;
     --journal-accent: #2d84c7;
-    --journal-accent-soft: color-mix(in srgb, var(--journal-accent) 42%, #f3f7fb);
-    --journal-accent-mid: color-mix(in srgb, var(--journal-accent) 74%, #2a3644);
-    --journal-accent-deep: color-mix(in srgb, var(--journal-accent) 88%, #111a24);
 }
 
 .journal-sidebar {
@@ -292,8 +289,6 @@ body {
     color: #d8dce3;
     text-decoration: none;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    border-left: 3px solid transparent;
-    transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease;
 }
 
 .entry-link span {
@@ -309,38 +304,25 @@ body {
 .entry-link:hover,
 .entry-link.active {
     background: var(--journal-accent);
-    background: linear-gradient(180deg, var(--journal-accent-mid) 0%, var(--journal-accent-deep) 100%);
-    border-left-color: var(--journal-accent-soft);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    background: color-mix(in srgb, var(--journal-accent) 76%, #253443);
     color: #fff;
 }
 
 .journal-sidebar .btn-primary,
 .mobile-new-entry-btn {
     background: var(--journal-accent);
-    background: linear-gradient(
-        180deg,
-        color-mix(in srgb, var(--journal-accent) 62%, #f0f4fa) 0%,
-        var(--journal-accent-mid) 100%
-    );
-    border-color: color-mix(in srgb, var(--journal-accent) 80%, #0f1822);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
-    color: #fff;
-    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.2);
+    border-color: var(--journal-accent);
+    border-color: color-mix(in srgb, var(--journal-accent) 72%, #15202c);
 }
 
 .journal-sidebar .btn-primary:hover,
 .journal-sidebar .btn-primary:focus,
 .mobile-new-entry-btn:hover,
 .mobile-new-entry-btn:focus {
-    background: var(--journal-accent-mid);
-    background: linear-gradient(
-        180deg,
-        color-mix(in srgb, var(--journal-accent) 58%, #dfe8f4) 0%,
-        var(--journal-accent-deep) 100%
-    );
-    border-color: color-mix(in srgb, var(--journal-accent) 78%, #0b1219);
-    color: #fff;
+    background: var(--journal-accent);
+    border-color: var(--journal-accent);
+    background: color-mix(in srgb, var(--journal-accent) 84%, #0f1722);
+    border-color: color-mix(in srgb, var(--journal-accent) 70%, #0c141d);
 }
 
 .editor-pane .card {
