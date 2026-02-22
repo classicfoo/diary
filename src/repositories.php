@@ -43,11 +43,12 @@ function list_journals(PDO $db, int $userId): array
 
 function create_journal(PDO $db, int $userId, string $title): int
 {
-    $stmt = $db->prepare('INSERT INTO journals (user_id, title, bg_color, sort_order) VALUES (:user_id, :title, :bg_color, :sort_order)');
+    $stmt = $db->prepare('INSERT INTO journals (user_id, title, bg_color, accent_color, sort_order) VALUES (:user_id, :title, :bg_color, :accent_color, :sort_order)');
     $stmt->execute([
         'user_id' => $userId,
         'title' => trim($title),
         'bg_color' => '#2f79bb',
+        'accent_color' => '#2f79bb',
         'sort_order' => 'updated_desc',
     ]);
 
@@ -163,12 +164,14 @@ function update_journal_settings(PDO $db, int $journalId, int $userId, string $b
     $stmt = $db->prepare(
         'UPDATE journals
          SET bg_color = :bg_color,
+             accent_color = :accent_color,
              sort_order = :sort_order,
              updated_at = CURRENT_TIMESTAMP
          WHERE id = :id AND user_id = :user_id'
     );
     $stmt->execute([
         'bg_color' => $safeColor,
+        'accent_color' => $safeColor,
         'sort_order' => $safeSort,
         'id' => $journalId,
         'user_id' => $userId,

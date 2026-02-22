@@ -36,6 +36,7 @@ function initialize_database(PDO $db): void
             user_id INTEGER NOT NULL,
             title TEXT NOT NULL,
             bg_color TEXT NOT NULL DEFAULT "#2f79bb",
+            accent_color TEXT NOT NULL DEFAULT "#2f79bb",
             sort_order TEXT NOT NULL DEFAULT "updated_desc",
             created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
             updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -74,6 +75,10 @@ function ensure_journals_columns(PDO $db): void
 
     if (!in_array('sort_order', $names, true)) {
         $db->exec('ALTER TABLE journals ADD COLUMN sort_order TEXT NOT NULL DEFAULT "updated_desc"');
+    }
+
+    if (!in_array('accent_color', $names, true)) {
+        $db->exec('ALTER TABLE journals ADD COLUMN accent_color TEXT NOT NULL DEFAULT "#2f79bb"');
     }
 }
 
