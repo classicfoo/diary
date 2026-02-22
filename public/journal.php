@@ -37,9 +37,9 @@ $isMobileEdit = $mobileView === 'edit' && $activeEntry;
 $pageTitle = (string) $journal['title'];
 $pageClass = 'page-journal';
 $appNavColor = (string) ($journal['bg_color'] ?? '#1e1f23');
-$journalAccentColor = (string) ($journal['accent_color'] ?? '#2d84c7');
+$journalAccentColor = (string) ($journal['bg_color'] ?? '#2f79bb');
 if (!preg_match('/^#[0-9a-fA-F]{6}$/', $journalAccentColor)) {
-    $journalAccentColor = '#2d84c7';
+    $journalAccentColor = '#2f79bb';
 }
 require __DIR__ . '/../src/views/header.php';
 ?>

@@ -48,7 +48,7 @@ function create_journal(PDO $db, int $userId, string $title): int
         'user_id' => $userId,
         'title' => trim($title),
         'bg_color' => '#2f79bb',
-        'accent_color' => '#2d84c7',
+        'accent_color' => '#2f79bb',
         'sort_order' => 'updated_desc',
     ]);
 
@@ -155,12 +155,11 @@ function update_journal_title(PDO $db, int $journalId, int $userId, string $titl
     ]);
 }
 
-function update_journal_settings(PDO $db, int $journalId, int $userId, string $bgColor, string $accentColor, string $sortOrder): void
+function update_journal_settings(PDO $db, int $journalId, int $userId, string $bgColor, string $sortOrder): void
 {
     $allowedSort = ['created_desc', 'created_asc', 'updated_desc', 'updated_asc'];
     $safeSort = in_array($sortOrder, $allowedSort, true) ? $sortOrder : 'updated_desc';
     $safeColor = preg_match('/^#[0-9a-fA-F]{6}$/', $bgColor) ? $bgColor : '#2f79bb';
-    $safeAccentColor = preg_match('/^#[0-9a-fA-F]{6}$/', $accentColor) ? $accentColor : '#2d84c7';
 
     $stmt = $db->prepare(
         'UPDATE journals
@@ -172,7 +171,7 @@ function update_journal_settings(PDO $db, int $journalId, int $userId, string $b
     );
     $stmt->execute([
         'bg_color' => $safeColor,
-        'accent_color' => $safeAccentColor,
+        'accent_color' => $safeColor,
         'sort_order' => $safeSort,
         'id' => $journalId,
         'user_id' => $userId,
