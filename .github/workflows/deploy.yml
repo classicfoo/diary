@@ -3,7 +3,7 @@ name: Deploy to InfinityFree (FTP)
 on:
   push:
     branches:
-      - feature/journal-accent-theme
+      - main
   workflow_dispatch:
 
 jobs:
