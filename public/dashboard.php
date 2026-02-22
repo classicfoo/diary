@@ -76,7 +76,6 @@ require __DIR__ . '/../src/views/header.php';
                             <div class="desktop-journal-actions">
                                 <button type="button" class="desktop-journal-action rename-journal-btn" data-journal-id="<?= (int) $journal['id'] ?>" data-journal-title="<?= e((string) $journal['title']) ?>" title="Edit journal name">✎</button>
                                 <button type="button" class="desktop-journal-action lock-journal-btn" disabled title="Lock (coming soon)">🔒</button>
-                                <a href="/journal.php?id=<?= (int) $journal['id'] ?>" class="desktop-journal-action" title="Open Journal">📝</a>
                                 <button
                                     type="button"
                                     class="desktop-journal-action settings-journal-btn"
