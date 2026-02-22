@@ -30,16 +30,9 @@ require __DIR__ . '/../src/views/header.php';
     </div>
 </div>
 
-<div class="d-flex flex-wrap gap-3 align-items-center justify-content-between mb-4 desktop-section">
-    <h1 class="h4 m-0">Displaying <?= count($journals) ?> journal<?= count($journals) === 1 ? '' : 's' ?></h1>
-    <form method="post" action="/journals_create.php" class="d-flex gap-2 dashboard-create-form">
-        <?= csrf_input() ?>
-        <input type="text" name="title" class="form-control" placeholder="New journal title" required>
-        <button class="btn btn-primary" type="submit">New Journal</button>
-    </form>
-</div>
+<p class="desktop-section dashboard-user-message mb-4">Signed in as <?= e((string) (($user['name'] ?? '') !== '' ? $user['name'] : ($user['email'] ?? 'User'))) ?></p>
 
-<form method="post" action="/journals_create.php" class="d-none" id="mobile-new-journal-form">
+<form method="post" action="/journals_create.php" class="d-none" id="new-journal-form">
     <?= csrf_input() ?>
     <input type="hidden" name="title" value="">
 </form>
@@ -170,22 +163,34 @@ require __DIR__ . '/../src/views/header.php';
 <script>
 (() => {
     const mobileNewJournalBtn = document.getElementById('mobile-new-journal-btn');
-    const mobileNewJournalForm = document.getElementById('mobile-new-journal-form');
-    const titleInput = mobileNewJournalForm ? mobileNewJournalForm.querySelector('input[name="title"]') : null;
+    const desktopNewJournalMenuItem = document.getElementById('desktop-new-journal-menu-item');
+    const newJournalForm = document.getElementById('new-journal-form');
+    const titleInput = newJournalForm ? newJournalForm.querySelector('input[name="title"]') : null;
     const mobileLogoutItem = document.getElementById('mobile-logout-menu-item');
     const mobileLogoutForm = document.getElementById('mobile-logout-form-dashboard');
 
-    if (mobileNewJournalBtn && mobileNewJournalForm) {
+    const submitNewJournalFromPrompt = () => {
+        if (!newJournalForm || !titleInput) return;
+        const title = window.prompt('Journal title:', 'Untitled Journal');
+        if (!title || title.trim() === '') return;
+        titleInput.value = title.trim();
+        newJournalForm.submit();
+    };
+
+    if (mobileNewJournalBtn) {
         mobileNewJournalBtn.addEventListener('click', () => {
-            const title = window.prompt('Journal title:', 'Untitled Journal');
-            if (!title || title.trim() === '') return;
-            titleInput.value = title.trim();
-            mobileNewJournalForm.submit();
+            submitNewJournalFromPrompt();
         });
     }
 
-    if (mobileNewJournalForm && titleInput) {
-        mobileNewJournalForm.addEventListener('submit', (event) => {
+    if (desktopNewJournalMenuItem) {
+        desktopNewJournalMenuItem.addEventListener('click', () => {
+            submitNewJournalFromPrompt();
+        });
+    }
+
+    if (newJournalForm && titleInput) {
+        newJournalForm.addEventListener('submit', (event) => {
             const existing = titleInput.value.trim();
             if (existing !== '') return;
 

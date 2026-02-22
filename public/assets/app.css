@@ -121,6 +121,12 @@ body {
     font-family: Georgia, 'Times New Roman', serif;
 }
 
+.dashboard-user-message {
+    font-size: 1.85rem;
+    font-weight: 600;
+    color: #2c3a50;
+}
+
 .desktop-journal-book {
     position: relative;
     border-left: 20px solid rgba(36, 46, 59, 0.6);

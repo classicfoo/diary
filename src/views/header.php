@@ -20,6 +20,7 @@ $flashTypeMap = [
     'info' => 'toast-info',
 ];
 $flashClass = $flash ? ($flashTypeMap[$flash['type']] ?? 'toast-info') : '';
+$isDashboardPage = ($pageClass ?? '') === 'page-dashboard';
 ?>
 <body class="<?= e($pageClass ?? '') ?>"<?= is_authenticated() ? ' style="--app-nav-color: ' . e($safeNavColor) . ';"' : '' ?>>
 <?php if (is_authenticated()): ?>
@@ -27,11 +28,24 @@ $flashClass = $flash ? ($flashTypeMap[$flash['type']] ?? 'toast-info') : '';
     <div class="container-fluid">
         <a class="navbar-brand app-logo" href="/dashboard.php"><?= e((string) $brandText) ?></a>
         <div class="ms-auto d-flex align-items-center gap-3">
-            <a href="/dashboard.php" class="btn btn-light btn-sm fw-semibold">Dashboard</a>
-            <form action="/logout.php" method="post" class="m-0">
-                <?= csrf_input() ?>
-                <button type="submit" class="btn btn-outline-light btn-sm">Sign out</button>
-            </form>
+            <?php if ($isDashboardPage): ?>
+                <form action="/logout.php" method="post" class="m-0 d-none" id="desktop-dashboard-logout-form">
+                    <?= csrf_input() ?>
+                </form>
+                <div class="dropdown">
+                    <button class="btn btn-outline-light btn-sm fw-semibold" type="button" data-bs-toggle="dropdown" aria-expanded="false" title="Menu">☰</button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><button type="button" class="dropdown-item" id="desktop-new-journal-menu-item">New Journal</button></li>
+                        <li><button type="submit" form="desktop-dashboard-logout-form" class="dropdown-item text-danger">Sign out</button></li>
+                    </ul>
+                </div>
+            <?php else: ?>
+                <a href="/dashboard.php" class="btn btn-light btn-sm fw-semibold">Dashboard</a>
+                <form action="/logout.php" method="post" class="m-0">
+                    <?= csrf_input() ?>
+                    <button type="submit" class="btn btn-outline-light btn-sm">Sign out</button>
+                </form>
+            <?php endif; ?>
         </div>
     </div>
 </nav>
